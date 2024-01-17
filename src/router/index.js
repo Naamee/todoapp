@@ -10,11 +10,16 @@ const router = createRouter({
       name: 'default-project-view',
       component: DefaultProjectViewVue
     },
+    // {
+    //   path: '/another-project',
+    //   name: 'another-project-view',
+    //   component: AnotherProjectViewVue
+    // },
     {
-      path: '/another-project',
-      name: 'another-project-view',
+      path: '/project/:id', 
+      name: 'project-view',
       component: AnotherProjectViewVue
-    },
+    }
     // {
     //   path: '/about',
     //   name: 'about',

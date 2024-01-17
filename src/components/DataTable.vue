@@ -1,5 +1,6 @@
 <script setup>
 import DatePicker from '@/components/DatePicker.vue'
+import DataCheckBox  from './DataCheckBox.vue';
 import { ref, computed, watch } from 'vue'
 
 const dialog = ref(false)
@@ -10,14 +11,16 @@ const editedItem = ref({
   title: '',
   description: '',
   dueDate: null,
-  priority: ''
+  priority: '',
+  todos:[]
 })
 
 const defaultItem = ref({
   title: '',
   description: 0,
   dueDate: null,
-  priority: 0
+  priority: '',
+  todos:[]
 })
 
 const headers = [
@@ -29,6 +32,7 @@ const headers = [
 ]
 
 const tasks = ref([])
+
 
 const formTitle = computed(() => (editedIndex.value === -1 ? 'New Task' : 'Edit Task'))
 
@@ -71,10 +75,17 @@ const save = () => {
   if (editedIndex.value > -1) {
     Object.assign(tasks.value[editedIndex.value], editedItem.value)
   } else {
-    tasks.value.push({ ...editedItem.value })
+    tasks.value.push({ ...editedItem.value, isChecked: true })
   }
   close()
 }
+
+const addCheckBox = () => {
+     editedItem.value.todos.push({ label: editedItem.value.description, isChecked: true });
+     editedItem.value.description = '';
+   };
+
+initialize()
 
 watch(dialog, (val) => {
   val || close()
@@ -84,7 +95,7 @@ watch(dialogDelete, (val) => {
   val || closeDelete()
 })
 
-initialize()
+
 </script>
 
 <template>
@@ -116,7 +127,11 @@ initialize()
                       v-model="editedItem.description"
                       label="Description"
                       rows="1"
+                      @keyup.enter="addCheckBox"
                     ></v-textarea>
+                  </v-col>
+                  <v-col id="new-checks" cols="12">
+                    <DataCheckBox v-for="(todo, index) in editedItem.todos" :key="todo.label" :id="String(index)" :label="todo.label" v-model="editedItem.todos[index]" class="mb-n7" />
                   </v-col>
                   <v-col cols="6">
                     <DatePicker label="Due Date" v-model="editedItem.dueDate" id="date-picker" />
