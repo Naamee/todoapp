@@ -1,5 +1,8 @@
 <script setup>
-const projects = ["MMA", "Coding", "Personal"]; 
+import { useProjectStore } from '@/stores/ProjectStore'
+
+const projectsStore = useProjectStore()
+const projects = projectsStore.projects
 </script>
 
 <template>

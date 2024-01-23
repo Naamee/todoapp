@@ -1,7 +1,9 @@
 <script setup>
 import DatePicker from '@/components/DatePicker.vue'
-import DataCheckBox  from './DataCheckBox.vue';
 import { ref, computed, watch } from 'vue'
+import { useRoute } from 'vue-router'
+// import { useDateFormat, useNow } from '@vuecore'
+
 
 const dialog = ref(false)
 const dialogDelete = ref(false)
@@ -12,15 +14,15 @@ const editedItem = ref({
   description: '',
   dueDate: null,
   priority: '',
-  todos:[]
+  todos: []
 })
 
 const defaultItem = ref({
   title: '',
-  description: 0,
+  description: '',
   dueDate: null,
   priority: '',
-  todos:[]
+  todos: []
 })
 
 const headers = [
@@ -33,13 +35,10 @@ const headers = [
 
 const tasks = ref([])
 
-
 const formTitle = computed(() => (editedIndex.value === -1 ? 'New Task' : 'Edit Task'))
 
 const initialize = () => {
-  tasks.value = [
-    { title: 'Task 1', description: 'Description 1', dueDate: '10/10/2021', priority: 'High' }
-  ]
+  tasks.value = []
 }
 
 const editItem = (item) => {
@@ -80,11 +79,13 @@ const save = () => {
   close()
 }
 
-const addCheckBox = () => {
-     editedItem.value.todos.push({ label: editedItem.value.description, isChecked: true });
-     editedItem.value.description = '';
-   };
+//get current route name
+const route = useRoute()
+const currentRoutePath = computed(() => route.path)
+const pathSegments = computed(() => currentRoutePath.value.split('/'))
+const currentRouteName = computed(() => pathSegments.value[pathSegments.value.length - 1])
 
+//watchers
 initialize()
 
 watch(dialog, (val) => {
@@ -94,15 +95,13 @@ watch(dialog, (val) => {
 watch(dialogDelete, (val) => {
   val || closeDelete()
 })
-
-
 </script>
 
 <template>
   <v-data-table :headers="headers" :items="tasks" :sort-by="[{ key: 'title', order: 'asc' }]">
     <template v-slot:top>
       <v-toolbar flat>
-        <v-toolbar-title>Default Project</v-toolbar-title>
+        <v-toolbar-title>{{ currentRouteName || 'Default Project' }}</v-toolbar-title>
         <v-divider class="mx-4" inset vertical></v-divider>
         <v-spacer></v-spacer>
         <v-dialog v-model="dialog" max-width="500px">
@@ -126,12 +125,8 @@ watch(dialogDelete, (val) => {
                     <v-textarea
                       v-model="editedItem.description"
                       label="Description"
-                      rows="1"
-                      @keyup.enter="addCheckBox"
+                      rows="2"
                     ></v-textarea>
-                  </v-col>
-                  <v-col id="new-checks" cols="12">
-                    <DataCheckBox v-for="(todo, index) in editedItem.todos" :key="todo.label" :id="String(index)" :label="todo.label" v-model="editedItem.todos[index]" class="mb-n7" />
                   </v-col>
                   <v-col cols="6">
                     <DatePicker label="Due Date" v-model="editedItem.dueDate" id="date-picker" />
