@@ -6,13 +6,20 @@ const projectsStore = useProjectStore()
 const projects = projectsStore.projects
 
 const isActive = ref(false)
+const newProjectName = ref('')
 
 const addProject = () => {
-    isActive.value = !isActive.value
-}
+  isActive.value = !isActive.value;
+};
 
 const newProject = (name) => {
-  projectsStore.addProject(name)
+  if (name === '') {
+    isActive.value = !isActive.value
+  } else {
+    projectsStore.addProject(name)
+    isActive.value = !isActive.value
+    newProjectName.value = ''
+  }
 }
 </script>
 
@@ -22,7 +29,7 @@ const newProject = (name) => {
       <v-avatar icon="mdi-account" color="grey"></v-avatar>
       <v-list-item title="Naamee Akram" class="text-grey"></v-list-item>
     </div>
-    <v-btn rounded="0" block="true" color="teal-darken-1" class="mb-4" @click="addProject"
+    <v-btn rounded="0" block color="teal-darken-1" class="mb-4" @click="addProject"
       >Add New Project</v-btn
     >
     <v-list-item link to="/" class="text-body-2">Default Project</v-list-item>
@@ -30,19 +37,16 @@ const newProject = (name) => {
       <v-list-item-title class="text-body-2">{{ project }}</v-list-item-title></v-list-item
     >
     <v-text-field
-            v-model="newProjectName"
-            hide-details
-            placeholder="New Project"  
-            variant="outlined"
-            @keyup.enter="newProject(newProjectName)"
-            :class="{active: isActive}"
-          ></v-text-field>
+      v-if="isActive"
+      v-model="newProjectName"
+      hide-details
+      placeholder="Enter New Project Name"
+      variant="outlined"
+      density="compact"
+      rounded="0"
+      color="teal-darken-1"
+      @keyup.enter="newProject(newProjectName)"
+      class="text-h2"
+    ></v-text-field>
   </v-navigation-drawer>
 </template>
-
-<style scoped>
-.active {
-  display: none;
-}
-</style>
-
