@@ -8,6 +8,7 @@ const projects = projectsStore.projects
 const isActive = ref(false)
 const newProjectName = ref('')
 
+
 const addProject = () => {
   isActive.value = !isActive.value;
 };
@@ -40,6 +41,7 @@ const newProject = (name) => {
       v-if="isActive"
       v-model="newProjectName"
       hide-details
+      autofocus
       placeholder="Enter New Project Name"
       variant="outlined"
       density="compact"
@@ -47,6 +49,6 @@ const newProject = (name) => {
       color="teal-darken-1"
       @keyup.enter="newProject(newProjectName)"
       class="text-h2"
-    ></v-text-field>
+      ></v-text-field>
   </v-navigation-drawer>
 </template>
