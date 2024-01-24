@@ -1,9 +1,5 @@
 <template>
-  <v-app-bar :elevation="2">
-    <template v-slot:prepend>
-      <v-app-bar-nav-icon></v-app-bar-nav-icon>
-    </template>
-
-    <v-app-bar-title>Application Bar</v-app-bar-title>
-  </v-app-bar>
+    <v-app-bar :elevation="2" class="px-4" density="compact">
+        <v-app-bar-title class="text-teal font-weight-black">MyNotes</v-app-bar-title>
+    </v-app-bar>
 </template>
