@@ -1,4 +1,3 @@
-
 <script setup>
 import { ref, computed, watch } from 'vue'
 
@@ -7,8 +6,6 @@ const { label } = defineProps(['label'])
 const modelValue = defineModel()
 
 const isMenuOpen = ref(false)
-
-
 
 const formattedDate = computed(() => {
   return modelValue.value ? modelValue.value.toLocaleDateString('en') : ''
@@ -26,13 +23,15 @@ watch(modelValue, () => {
         :label="label"
         :model-value="formattedDate"
         readonly
+        variant="outlined"
+        color="teal"
         v-bind="props"
+        class="text-black"
         hide-details
       ></v-text-field>
     </template>
-    <v-date-picker v-model="modelValue" hide-actions hide-header>
+    <v-date-picker color="teal" v-model="modelValue" hide-actions hide-header>
       <template v-slot:header></template>
     </v-date-picker>
   </v-menu>
 </template>
-

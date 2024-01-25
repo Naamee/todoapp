@@ -3,6 +3,8 @@ import TaskMain from '@/components/TaskMain.vue'
 import { ref, watch, nextTick } from 'vue'
 import { useRoute } from 'vue-router'
 import { useProjectStore } from '@/stores/projectStore'
+import TaskModal from '@/components/TaskModal.vue'
+
 
 const props = defineProps({
   customVariable: String
@@ -35,9 +37,7 @@ watch(
     <v-card-text>
       <v-window v-model="tab">
         <v-window-item value="pending-tab">
-          <v-btn :ripple="false" variant="plain" class="pr-5 text-body-2 text-teal"
-            >+ Add New Task</v-btn
-          >
+          <TaskModal />
           <TaskMain status="Pending" :task-type="pendingTasks" />
         </v-window-item>
         <v-window-item value="completed-tab">
