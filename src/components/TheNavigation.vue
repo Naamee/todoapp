@@ -1,13 +1,12 @@
 <script setup>
 import { ref } from 'vue'
-import { useProjectStore } from '@/stores/projectStore'
+import { useProjectStore } from '@/stores/projectStore';
 
-const projectsStore = useProjectStore()
-const projects = projectsStore.projects
+const projectStore = useProjectStore();;
+const projects = projectStore.getAllProjects();
 
 const isActive = ref(false)
 const newProjectName = ref('')
-
 
 const addProject = () => {
   isActive.value = !isActive.value;
@@ -17,7 +16,7 @@ const newProject = (name) => {
   if (name === '') {
     isActive.value = !isActive.value
   } else {
-    projectsStore.addProject(name)
+    projectStore.addProject(name)
     isActive.value = !isActive.value
     newProjectName.value = ''
   }
@@ -33,9 +32,8 @@ const newProject = (name) => {
     <v-btn rounded="0" block color="teal-darken-1" class="mb-4" @click="addProject"
       >Add New Project</v-btn
     >
-    <v-list-item link to="/project/defaultProject" class="text-body-2">Default Project</v-list-item>
-    <v-list-item v-for="project in projects" :key="project" :to="`/project/${project}`">
-      <v-list-item-title class="text-body-2">{{ project }}</v-list-item-title></v-list-item
+    <v-list-item v-for="(project, index) in projects" :key="index" :to="`/project/${project.projectName}`">
+    <v-list-item-title class="text-body-2">{{ project.projectName }}</v-list-item-title></v-list-item
     >
     <v-text-field
       v-if="isActive"

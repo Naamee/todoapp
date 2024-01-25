@@ -1,27 +1,28 @@
 <script setup>
-import TaskMain from '@/components/TaskMain.vue';
-import { ref, watch, nextTick } from 'vue';
-import { useRoute } from 'vue-router';
-import { useTaskStore } from '@/stores/taskStore'
+import TaskMain from '@/components/TaskMain.vue'
+import { ref, watch, nextTick } from 'vue'
+import { useRoute } from 'vue-router'
+import { useProjectStore } from '@/stores/projectStore'
 
 const props = defineProps({
   customVariable: String
 })
 
-const route = useRoute();
-const taskStore = useTaskStore()
-const pendingTasks = ref(taskStore.getPendingTasks(String(props.customVariable)))
-const completedTasks = ref(taskStore.getCompletedTasks(String(props.customVariable)))
-const tab = ref(null);
+const route = useRoute()
+const projectStore = useProjectStore()
+const pendingTasks = ref(projectStore.getPendingTasks(String(props.customVariable)))
+const completedTasks = ref(projectStore.getCompletedTasks(String(props.customVariable)))
+const tab = ref(null)
 
-
-watch(() => route.path, async () => {
- await nextTick();
- pendingTasks.value = await taskStore.getPendingTasks(String(props.customVariable));
- completedTasks.value = await taskStore.getCompletedTasks(String(props.customVariable));
- console.log(props.customVariable)
- console.log(String(props.customVariable))
-});
+watch(
+  () => route.path,
+  async () => {
+    await nextTick()
+    pendingTasks.value = await projectStore.getPendingTasks(String(props.customVariable))
+    completedTasks.value = await projectStore.getCompletedTasks(String(props.customVariable))
+    console.log(pendingTasks.value)
+  }
+)
 </script>
 
 <template>
@@ -34,8 +35,10 @@ watch(() => route.path, async () => {
     <v-card-text>
       <v-window v-model="tab">
         <v-window-item value="pending-tab">
-          <v-btn :ripple="false" variant="plain" class="pr-5 text-body-2 text-teal">+ Add New Task</v-btn>
-          <TaskMain status="Pending" :task-type="pendingTasks"/>
+          <v-btn :ripple="false" variant="plain" class="pr-5 text-body-2 text-teal"
+            >+ Add New Task</v-btn
+          >
+          <TaskMain status="Pending" :task-type="pendingTasks" />
         </v-window-item>
         <v-window-item value="completed-tab">
           <TaskMain status="Completed" :task-type="completedTasks" />
