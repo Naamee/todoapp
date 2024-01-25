@@ -1,5 +1,4 @@
 <script setup>
-import { defineProps } from 'vue'
 defineProps({
   title: String,
   description: String,
@@ -11,7 +10,7 @@ defineProps({
 <template>
   <v-sheet elevation="2" class="pb-5 pr-5" style="word-break: break-word">
     <v-radio
-      true-icon="mdi-checkbox-marked-circle"
+      true-icon="$success"
       color="success"
       class="text-teal-darken-3 font-weight-bold"
       :label="title"
@@ -23,7 +22,7 @@ defineProps({
       <p class="pl-10 text-body-2 font-weight-medium text-grey">
         Due Date: <span class="text-teal-lighten-2">{{ dueDate }}</span>
       </p>
-      <p class="font-weight-medium">{{ priority }}</p>
+      <p class="font-weight-medium" :class="text-grey=='High Priority'">{{ priority }}</p>
     </div>
   </v-sheet>
 </template>

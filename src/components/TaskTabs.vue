@@ -1,8 +1,15 @@
 <script setup>
-import TasksMain from '@/components/TasksMain.vue';
+import TaskMain from '@/components/TaskMain.vue';
 import { ref } from 'vue';
 
+import { useTaskStore } from '@/stores/TaskStore'
+
+const taskStore = useTaskStore()
+const pendingTasks = taskStore.getPendingTasks()
+const completedTasks = taskStore.getCompletedTasks()
+
 const tab = ref(null);
+
 </script>
 
 <template>
@@ -16,11 +23,10 @@ const tab = ref(null);
       <v-window v-model="tab">
         <v-window-item value="pending-tab">
           <v-btn :ripple="false" variant="plain" class="pr-5 text-body-2 text-teal">+ Add New Task</v-btn>
-          <TasksMain />
+          <TaskMain status="Pending" :task-type="pendingTasks"/>
         </v-window-item>
-
         <v-window-item value="completed-tab">
-          <TasksMain />
+          <TaskMain status="Completed" :task-type="completedTasks" />
         </v-window-item>
       </v-window>
     </v-card-text>
