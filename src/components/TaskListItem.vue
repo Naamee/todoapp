@@ -22,7 +22,7 @@ defineProps({
       <p class="pl-10 text-body-2 font-weight-medium text-grey">
         Due Date: <span class="text-teal-lighten-2">{{ dueDate }}</span>
       </p>
-      <p class="font-weight-medium" :class="text-grey=='High Priority'">{{ priority }}</p>
+      <p class="font-weight-medium" :class="priority == 'High Priority' ? 'text-red' : priority == 'Medium Priority' ? 'text-orange' : 'text-green'">{{ priority }}</p>
     </div>
   </v-sheet>
 </template>

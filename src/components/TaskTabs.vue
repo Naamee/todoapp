@@ -2,7 +2,7 @@
 import TaskMain from '@/components/TaskMain.vue';
 import { ref } from 'vue';
 
-import { useTaskStore } from '@/stores/TaskStore'
+import { useTaskStore } from '@/stores/taskStore'
 
 const taskStore = useTaskStore()
 const pendingTasks = taskStore.getPendingTasks()
@@ -10,6 +10,7 @@ const completedTasks = taskStore.getCompletedTasks()
 
 const tab = ref(null);
 
+taskStore.logger()
 </script>
 
 <template>

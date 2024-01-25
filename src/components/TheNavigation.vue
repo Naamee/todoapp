@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-import { useProjectStore } from '@/stores/ProjectStore'
+import { useProjectStore } from '@/stores/projectStore'
 
 const projectsStore = useProjectStore()
 const projects = projectsStore.projects
