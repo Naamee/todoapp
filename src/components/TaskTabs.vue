@@ -1,16 +1,27 @@
 <script setup>
 import TaskMain from '@/components/TaskMain.vue';
-import { ref } from 'vue';
-
+import { ref, watch, nextTick } from 'vue';
+import { useRoute } from 'vue-router';
 import { useTaskStore } from '@/stores/taskStore'
 
-const taskStore = useTaskStore()
-const pendingTasks = taskStore.getPendingTasks()
-const completedTasks = taskStore.getCompletedTasks()
+const props = defineProps({
+  customVariable: String
+})
 
+const route = useRoute();
+const taskStore = useTaskStore()
+const pendingTasks = ref(taskStore.getPendingTasks(String(props.customVariable)))
+const completedTasks = ref(taskStore.getCompletedTasks(String(props.customVariable)))
 const tab = ref(null);
 
-taskStore.logger()
+
+watch(() => route.path, async () => {
+ await nextTick();
+ pendingTasks.value = await taskStore.getPendingTasks(String(props.customVariable));
+ completedTasks.value = await taskStore.getCompletedTasks(String(props.customVariable));
+ console.log(props.customVariable)
+ console.log(String(props.customVariable))
+});
 </script>
 
 <template>

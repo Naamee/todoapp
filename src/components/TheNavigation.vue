@@ -33,7 +33,7 @@ const newProject = (name) => {
     <v-btn rounded="0" block color="teal-darken-1" class="mb-4" @click="addProject"
       >Add New Project</v-btn
     >
-    <v-list-item link to="/" class="text-body-2">Default Project</v-list-item>
+    <v-list-item link to="/project/defaultProject" class="text-body-2">Default Project</v-list-item>
     <v-list-item v-for="project in projects" :key="project" :to="`/project/${project}`">
       <v-list-item-title class="text-body-2">{{ project }}</v-list-item-title></v-list-item
     >

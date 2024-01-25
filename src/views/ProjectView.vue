@@ -10,6 +10,7 @@ const route = useRoute()
 const currentRoutePath = computed(() => route.path)
 const pathSegments = computed(() => currentRoutePath.value.split('/'))
 const currentRouteName = computed(() => pathSegments.value[pathSegments.value.length - 1])
+
 </script>
 
 <template>
@@ -18,7 +19,7 @@ const currentRouteName = computed(() => pathSegments.value[pathSegments.value.le
     <TheNavigation />
     <v-main class="ml-10 mt-5">
       <h1 class="text-grey-darken-1 mb-4">{{ currentRouteName || 'Default Project' }}</h1>
-      <TaskTabs />
+      <TaskTabs :customVariable="currentRouteName" />
     </v-main>
   </v-app>
 </template>
