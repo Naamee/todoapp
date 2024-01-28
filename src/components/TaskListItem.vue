@@ -1,6 +1,5 @@
 <script setup>
 import DeleteBtn from './DeleteBtn.vue';
-import { useProjectStore } from '@/stores/projectStore'
 
 defineProps({
   title: String,
@@ -8,12 +7,6 @@ defineProps({
   dueDate: String,
   priority: String,
 })
-
-const projectStore = useProjectStore();;
-
-const deleteTask = () => {
-  projectStore.deleteTask(this.id)
-}
 </script>
 
 <template>
@@ -25,7 +18,7 @@ const deleteTask = () => {
         class="text-teal-darken-3 font-weight-bold"
         :label="title"
       ></v-radio>
-      <DeleteBtn @click="deleteTask"/>
+      <DeleteBtn/>
     </div>
     <p class="text-body-2 text-grey-darken-1 mb-3 pl-10 text-truncate pr-5">
       {{ description }}

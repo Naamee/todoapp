@@ -7,6 +7,7 @@ import { useProjectStore } from '@/stores/projectStore'
 
 import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+
 //get current route name
 const route = useRoute()
 const currentRoutePath = computed(() => route.path)
@@ -17,10 +18,11 @@ const projectStore = useProjectStore()
 const router = useRouter()
 
 const deleteProject = () => {
-  projectStore
-    .deleteProject(currentRouteName.value)
-    router.push('/Default%20Project')
+  projectStore.deleteProject(currentRouteName.value)
+  router.push('/Default Project')
 }
+
+const isDefault = computed(() => currentRouteName.value === 'Default Project')
 </script>
 
 <template>
@@ -30,7 +32,7 @@ const deleteProject = () => {
     <v-main class="ml-10 mt-5">
       <div class="d-flex">
         <h1 class="text-grey-darken-1 mb-4">{{ currentRouteName || 'Default Project' }}</h1>
-        <DeleteBtn size="x-small" @click="deleteProject" />
+        <DeleteBtn v-if="!isDefault" size="x-small" @click="deleteProject" />
       </div>
       <TaskTabs :customVariable="currentRouteName" />
     </v-main>
