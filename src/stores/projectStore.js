@@ -49,6 +49,10 @@ export const useProjectStore = defineStore('projects', {
             this.allProjects.push({ projectName: project, projectTasks: [] });
             console.log(this.allProjects)
         },
+        addTask(task) {
+            const project = this.allProjects.find(p => p.projectName === task.projectName);
+            project.projectTasks.push(task);
+        },
         getAllProjects() {
             return this.allProjects;
         },
