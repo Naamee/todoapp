@@ -66,6 +66,13 @@ export const useProjectStore = defineStore('projects', {
             if (index !== -1) {
                 this.allProjects.splice(index, 1);
             }
+        },
+        deleteTask(task) {
+            const project = this.allProjects.find(p => p.projectName === task.projectName);
+            const index = project.projectTasks.findIndex(t => t.id === task.id);
+            if (index !== -1) {
+                project.projectTasks.splice(index, 1);
+            }
         }
     }
 })

@@ -1,24 +1,36 @@
 <script setup>
+import DeleteBtn from './DeleteBtn.vue';
+import { useProjectStore } from '@/stores/projectStore'
+
 defineProps({
   title: String,
   description: String,
   dueDate: String,
   priority: String,
 })
+
+const projectStore = useProjectStore();;
+
+const deleteTask = () => {
+  projectStore.deleteTask(this.id)
+}
 </script>
 
 <template>
-  <v-sheet elevation="2" class="pb-5 pr-5" style="word-break: break-word">
-    <v-radio
-      true-icon="$success"
-      color="success"
-      class="text-teal-darken-3 font-weight-bold"
-      :label="title"
-    ></v-radio>
-    <p class="text-body-2 text-grey-darken-1 mb-3 pl-10 text-truncate">
+  <v-sheet elevation="2" class="pb-5 " style="word-break: break-word">
+    <div class="d-flex flex-space-between">
+      <v-radio
+        true-icon="$success"
+        color="success"
+        class="text-teal-darken-3 font-weight-bold"
+        :label="title"
+      ></v-radio>
+      <DeleteBtn @click="deleteTask"/>
+    </div>
+    <p class="text-body-2 text-grey-darken-1 mb-3 pl-10 text-truncate pr-5">
       {{ description }}
     </p>
-    <div class="d-flex justify-space-between">
+    <div class="d-flex justify-space-between pr-5">
       <p class="pl-10 text-body-2 font-weight-medium text-grey">
         Due Date: <span class="text-teal-lighten-2">{{ dueDate }}</span>
       </p>
