@@ -2,6 +2,7 @@
 import TheHeader from '@/components/TheHeader.vue'
 import TheNavigation from '@/components/TheNavigation.vue'
 import TaskTabs from '@/components/TaskTabs.vue'
+import ProjDeleteBtn from '@/components/ProjDeleteBtn.vue'
 
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
@@ -18,7 +19,10 @@ const currentRouteName = computed(() => pathSegments.value[pathSegments.value.le
     <TheHeader />
     <TheNavigation />
     <v-main class="ml-10 mt-5">
-      <h1 class="text-grey-darken-1 mb-4">{{ currentRouteName || 'Default Project' }}</h1>
+      <div class="d-flex">
+        <h1 class="text-grey-darken-1 mb-4">{{ currentRouteName || 'Default Project' }}</h1>
+        <ProjDeleteBtn />
+      </div>
       <TaskTabs :customVariable="currentRouteName" />
     </v-main>
   </v-app>

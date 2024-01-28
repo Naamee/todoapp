@@ -60,6 +60,12 @@ export const useProjectStore = defineStore('projects', {
         getCompletedTasks(projectName) {
             const project = this.allProjects.find(p => p.projectName === projectName);
             return project ? project.projectTasks.filter(task => task.status) : [];
+        },
+        deleteProject(project) {
+            const index = this.allProjects.findIndex(p => p.projectName === project);
+            if (index !== -1) {
+                this.allProjects.splice(index, 1);
+            }
         }
     }
 })

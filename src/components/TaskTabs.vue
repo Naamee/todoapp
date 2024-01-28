@@ -22,7 +22,6 @@ watch(
     await nextTick()
     pendingTasks.value = await projectStore.getPendingTasks(String(props.customVariable))
     completedTasks.value = await projectStore.getCompletedTasks(String(props.customVariable))
-    console.log(pendingTasks.value)
   }
 )
 </script>
