@@ -41,8 +41,7 @@ export const useProjectStore = defineStore('projects', {
                         { id: 2, projectName: 'Coding', title: 'Go Shopping', description: 'This is the second task. It requires going to the grocery store and buying essential items for the week.', dueDate: '2021/09/02', priority: 'Low Priority', status: true },
                     ]
                 }
-            ]
-
+            ],
         }
     },
     actions: {
@@ -73,6 +72,6 @@ export const useProjectStore = defineStore('projects', {
             if (index !== -1) {
                 projectName.projectTasks.splice(index, 1);
             }
-        }
+        },
     }
 })

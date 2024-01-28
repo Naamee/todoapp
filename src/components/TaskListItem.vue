@@ -1,16 +1,19 @@
 <script setup>
 import DeleteBtn from './DeleteBtn.vue';
+import { ref } from 'vue';
 
-defineProps({
+const props = defineProps({
   taskID: Number,
   projectName: String,
   title: String,
   description: String,
   dueDate: String,
   priority: String,
+  status: Boolean,
 })
 
 const emit = defineEmits(['delete'])
+const completedStatus = ref(props.status)
 </script>
 
 <template>
@@ -19,8 +22,9 @@ const emit = defineEmits(['delete'])
       <v-radio
         true-icon="$success"
         color="success"
-        class="text-teal-darken-3 font-weight-bold"
+        class="status-radio text-teal-darken-3 font-weight-bold"
         :label="title"
+        v-model="completedStatus"
       ></v-radio>
       <DeleteBtn @click="emit('delete', [projectName, taskID])"/>
     </div>
