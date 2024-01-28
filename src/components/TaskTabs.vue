@@ -1,29 +1,24 @@
 <script setup>
 import TaskMain from '@/components/TaskMain.vue'
-import { ref, watch, nextTick } from 'vue'
-import { useRoute } from 'vue-router'
+import { ref } from 'vue'
 import { useProjectStore } from '@/stores/projectStore'
 import TaskModal from '@/components/TaskModal.vue'
+import { watchEffect } from 'vue'
 
 
 const props = defineProps({
   customVariable: String
 })
 
-const route = useRoute()
 const projectStore = useProjectStore()
 const pendingTasks = ref(projectStore.getPendingTasks(String(props.customVariable)))
 const completedTasks = ref(projectStore.getCompletedTasks(String(props.customVariable)))
 const tab = ref(null)
 
-watch(
-  () => route.path,
-  async () => {
-    await nextTick()
-    pendingTasks.value = await projectStore.getPendingTasks(String(props.customVariable))
-    completedTasks.value = await projectStore.getCompletedTasks(String(props.customVariable))
-  }
-)
+watchEffect( async() => {
+  pendingTasks.value = await projectStore.getPendingTasks(String(props.customVariable))
+  completedTasks.value = await projectStore.getCompletedTasks(String(props.customVariable))
+})
 </script>
 
 <template>

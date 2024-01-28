@@ -2,11 +2,15 @@
 import DeleteBtn from './DeleteBtn.vue';
 
 defineProps({
+  taskID: Number,
+  projectName: String,
   title: String,
   description: String,
   dueDate: String,
   priority: String,
 })
+
+const emit = defineEmits(['delete'])
 </script>
 
 <template>
@@ -18,7 +22,7 @@ defineProps({
         class="text-teal-darken-3 font-weight-bold"
         :label="title"
       ></v-radio>
-      <DeleteBtn/>
+      <DeleteBtn @click="emit('delete', [projectName, taskID])"/>
     </div>
     <p class="text-body-2 text-grey-darken-1 mb-3 pl-10 text-truncate pr-5">
       {{ description }}
