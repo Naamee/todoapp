@@ -15,8 +15,9 @@ const description = ref('')
 const dueDate = ref(null)
 const priority = ref('')
 const projectStore = useProjectStore()
+const openDialog = ref(false)
 
-const submit = () => {
+const submit = async() => {
   const formattedDate = dueDate.value.toLocaleDateString('en-US')
 
   let newTask = {
@@ -29,16 +30,17 @@ const submit = () => {
     status: false
   }
 
-  projectStore.addTask(newTask)
+  await projectStore.addTask(newTask)
   title.value = ''
   description.value = ''
   dueDate.value = null
   priority.value = ''
+  openDialog.value = false
 }
 </script>
 
 <template>
-  <v-dialog width="500">
+  <v-dialog width="500" v-model="openDialog">
     <template v-slot:activator="{ props }">
       <v-btn
         class="pr-5 text-body-2 text-teal"
@@ -50,7 +52,7 @@ const submit = () => {
       </v-btn>
     </template>
 
-    <template v-slot:default="{ isActive }">
+    <template #default="{ isActive }">
       <v-card class="text-grey-darken-1" title="Add New Task">
         <v-card-text class="mt-2">
           <v-text-field
@@ -94,7 +96,7 @@ const submit = () => {
             variant="elevated"
             @click="isActive.value = false"
           ></v-btn>
-          <v-btn text="Save" color="teal" variant="elevated" @click="[submit, isActive.value = false]"></v-btn>
+          <v-btn text="Save" color="teal" variant="elevated" @click="submit"></v-btn>
         </v-card-actions>
       </v-card>
     </template>
