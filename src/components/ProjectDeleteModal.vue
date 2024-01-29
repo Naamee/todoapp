@@ -24,7 +24,7 @@ const projectRules = [
 
 const deleteProject = () => {
   // Validate project field
-  const isProjectNameValid = projectRules((rule) => rule(project.value) === true)
+  const isProjectNameValid = projectRules.every((rule) => rule(project.value) === true)
 
   // If validation rule fails, prevent submission
   if (!isProjectNameValid) {
@@ -46,7 +46,7 @@ const cancel = () => {
     <template v-slot:activator="{ props }">
       <DeleteBtn size="x-small" v-bind="props" />
     </template>
-    <v-form ref="form">
+    <v-form ref="form" @submit="deleteProject">
       <v-card>
         <v-card-title class="ml-2 text-grey-darken-1">
           <span class="text-h5">Delete Project: {{ currentRouteName }}</span>
