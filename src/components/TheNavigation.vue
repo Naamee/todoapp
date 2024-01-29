@@ -1,10 +1,8 @@
 <script setup>
-import { ref } from 'vue'
-import { useProjectStore } from '@/stores/projectStore'
+import { ref, computed, onMounted } from 'vue'
+import { useAxiosStore } from '@/stores/axiosStore'
 
-const projectStore = useProjectStore()
-const projects = projectStore.getAllProjects()
-
+const axiosStore = useAxiosStore()
 const isActive = ref(false)
 const newProjectName = ref('')
 
@@ -22,6 +20,16 @@ const newProject = (name) => {
     newProjectName.value = ''
   }
 }
+
+
+
+const getProjects = computed(() => {
+  return axiosStore.getProjects;
+});
+
+onMounted(() => {
+  axiosStore.fetchProjects();
+});
 </script>
 
 <template>
@@ -34,13 +42,13 @@ const newProject = (name) => {
       >Add New Project</v-btn
     >
     <v-list-item
-      v-for="(project, index) in projects"
-      :key="index"
-      :to="`/${project.projectName}`"
+      v-for="project in getProjects"
+      :key="project.id"
+      :to="`/${project.name}`"
       base-color="teal"
     >
       <v-list-item-title class="text-body-2">{{
-        project.projectName
+        project.name
       }}</v-list-item-title></v-list-item
     >
     <v-text-field

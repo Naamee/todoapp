@@ -3,7 +3,6 @@ import TheHeader from '@/components/TheHeader.vue'
 import TheNavigation from '@/components/TheNavigation.vue'
 import TaskTabs from '@/components/TaskTabs.vue'
 import ProjectDeleteModal from '@/components/ProjectDeleteModal.vue'
-
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 
@@ -26,7 +25,6 @@ const isDefault = computed(() => currentRouteName.value === 'Default Project')
         <ProjectDeleteModal v-if="!isDefault"/>
       </div>
       <TaskTabs :customVariable="currentRouteName" />
-      
     </v-main>
   </v-app>
 </template>
