@@ -18,38 +18,37 @@ const projectStore = useProjectStore()
 const openDialog = ref(false)
 
 const titleRules = [
- (value) => {
-    if (!value) return 'You must enter a title.';
-    return true;
- },
- (value) => {
-    if (value && value.length < 3) return 'Title must have at least 3 characters.';
-    return true;
- }
-];
+  (value) => {
+    if (!value) return 'You must enter a title.'
+    return true
+  },
+  (value) => {
+    if (value && value.length < 3) return 'Title must have at least 3 characters.'
+    return true
+  }
+]
 
 const priorityRules = [
   (value) => {
     if (value) return true
     return 'You must select a priority.'
   }
-
 ]
 
 const submit = async () => {
   // Validate form fields
-  const isTitleValid = titleRules.every(rule => rule(title.value) === true);
-  const isPriorityValid = priorityRules.every(rule => rule(priority.value) === true);
+  const isTitleValid = titleRules.every((rule) => rule(title.value) === true)
+  const isPriorityValid = priorityRules.every((rule) => rule(priority.value) === true)
 
   // If any validation rule fails, prevent submission
   if (!isTitleValid || !isPriorityValid) {
-    return;
+    return
   }
 
-  const formattedDate = dueDate.value.toLocaleDateString('en-US')
+  const formattedDate = dueDate.value.toLocaleDateString('en-US') //format: mm/dd/yyyy
 
   let newTask = {
-    id: Math.floor(Math.random() * 100000),
+    id: Math.floor(Math.random() * 100000), //generate random ID
     projectName: currentRouteName.value,
     title: title.value,
     description: description.value || 'No description provided.',
@@ -58,7 +57,10 @@ const submit = async () => {
     status: false
   }
 
+  //add new task to store
   await projectStore.addTask(newTask)
+
+  //reset form fields
   title.value = ''
   description.value = ''
   dueDate.value = null
@@ -91,8 +93,6 @@ const submit = async () => {
               color="teal"
               label="Title"
               variant="outlined"
-              required
-              validate-on="lazy"
             ></v-text-field>
             <v-textarea
               class="text-black"

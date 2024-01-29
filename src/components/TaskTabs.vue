@@ -5,7 +5,6 @@ import { useProjectStore } from '@/stores/projectStore'
 import TaskModal from '@/components/TaskModal.vue'
 import { watchEffect } from 'vue'
 
-
 const props = defineProps({
   customVariable: String
 })
@@ -15,8 +14,8 @@ const pendingTasks = ref(projectStore.getPendingTasks(String(props.customVariabl
 const completedTasks = ref(projectStore.getCompletedTasks(String(props.customVariable)))
 const tab = ref(null)
 
-
-watchEffect( async() => {
+//update tasks when tab is changed
+watchEffect(async () => {
   pendingTasks.value = await projectStore.getPendingTasks(String(props.customVariable))
   completedTasks.value = await projectStore.getCompletedTasks(String(props.customVariable))
 })
@@ -32,7 +31,7 @@ watchEffect( async() => {
     <v-card-text>
       <v-window v-model="tab">
         <v-window-item value="pending-tab">
-          <TaskModal/>
+          <TaskModal />
           <TaskMain status="Pending" :task-type="pendingTasks" />
         </v-window-item>
         <v-window-item value="completed-tab">

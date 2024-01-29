@@ -11,15 +11,17 @@ const formattedDate = computed(() => {
   return modelValue.value ? modelValue.value.toLocaleDateString('en') : ''
 })
 
+//validation rules for datepicker
 const dueDateRules = [
- (value) => {
-    if (!value) return 'You must enter a due date.';
-    const today = new Date().setHours(0, 0, 0, 0);
-    const dueDate = new Date(value).setHours(0, 0, 0, 0);
-    if (today > dueDate) return 'Due date cannot be a past date.';
-    return true;
- }
-];
+  (value) => {
+    if (!value) return 'You must enter a due date.'
+    const today = new Date().setHours(0, 0, 0, 0)
+    const dueDate = new Date(value).setHours(0, 0, 0, 0)
+    if (today > dueDate) return 'Due date cannot be a past date.'
+    return true
+  }
+]
+
 watch(modelValue, () => {
   isMenuOpen.value = false
 })

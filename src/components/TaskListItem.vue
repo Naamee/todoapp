@@ -1,6 +1,6 @@
 <script setup>
-import DeleteBtn from './DeleteBtn.vue';
-import { ref } from 'vue';
+import DeleteBtn from './DeleteBtn.vue'
+import { ref } from 'vue'
 
 const props = defineProps({
   taskID: Number,
@@ -9,7 +9,7 @@ const props = defineProps({
   description: String,
   dueDate: String,
   priority: String,
-  status: Boolean,
+  status: Boolean
 })
 
 const emit = defineEmits(['delete'])
@@ -17,7 +17,7 @@ const completedStatus = ref(props.status)
 </script>
 
 <template>
-  <v-sheet elevation="2" class="pb-5 " style="word-break: break-word">
+  <v-sheet elevation="2" class="pb-5" style="word-break: break-word">
     <div class="d-flex flex-space-between">
       <v-radio
         true-icon="$success"
@@ -26,7 +26,7 @@ const completedStatus = ref(props.status)
         :label="title"
         v-model="completedStatus"
       ></v-radio>
-      <DeleteBtn @click="emit('delete', [projectName, taskID])"/>
+      <DeleteBtn @click="emit('delete', [projectName, taskID])" />
     </div>
     <p class="text-body-2 text-grey-darken-1 mb-3 pl-10 text-truncate pr-5">
       {{ description }}
@@ -35,7 +35,18 @@ const completedStatus = ref(props.status)
       <p class="pl-10 text-body-2 font-weight-medium text-grey">
         Due Date: <span class="text-teal-lighten-2">{{ dueDate }}</span>
       </p>
-      <p class="font-weight-medium" :class="priority == 'High Priority' ? 'text-red' : priority == 'Medium Priority' ? 'text-orange' : 'text-green'">{{ priority }}</p>
+      <p
+        class="font-weight-medium"
+        :class="
+          priority == 'High Priority'
+            ? 'text-red'
+            : priority == 'Medium Priority'
+              ? 'text-orange'
+              : 'text-green'
+        "
+      >
+        {{ priority }}
+      </p>
     </div>
   </v-sheet>
 </template>
