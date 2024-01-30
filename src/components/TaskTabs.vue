@@ -1,8 +1,7 @@
 <script setup>
 import TaskMain from '@/components/TaskMain.vue'
-import { ref, watchEffect } from 'vue'
+import { ref, onMounted, onUpdated } from 'vue'
 import TaskModal from '@/components/TaskModal.vue'
-// import { useProjectStore } from '@/stores/projectStore'
 import { useAxiosStore } from '@/stores/axiosStore'
 
 const props = defineProps({
@@ -14,7 +13,7 @@ const axiosStore = useAxiosStore()
 
 async function getProjectID() {
   const projects = await axiosStore.fetchProjects()
-  const project = projects.find((project) => project.name === props.customVariable);
+  const project = await projects.find((project) => project.name === props.customVariable);
 
   if (project) {
     return project.id;
@@ -24,27 +23,29 @@ async function getProjectID() {
 }
 
 async function getPendingTasks() {
-  const pendingTasksArray = []
   const projectID = await getProjectID()
-  const pendingTasks = await axiosStore.fetchTasks()
-  pendingTasks.forEach((task) => {
-    if (task.project == projectID && task.completed == false) {
-      pendingTasksArray.push(task)
-    }
-  })
-  return pendingTasksArray
+  const pendingTasks = await axiosStore.fetchFilteredTasks(projectID, 'false')
+  return pendingTasks
 }
 
-const pendingTasks = ref(getPendingTasks())
-// const projectStore = useProjectStore()
-// const pendingTasks = ref(projectStore.getPendingTasks(String(props.customVariable)))
-// const completedTasks = ref(projectStore.getCompletedTasks(String(props.customVariable)))
+async function getCompletedTasks() {
+  const projectID = await getProjectID()
+  const completedTasks = await axiosStore.fetchFilteredTasks(projectID, 'true')
+  return completedTasks
+}
 
-// //update tasks when tab is changed
-// watchEffect(async () => {
-//   pendingTasks.value = await projectStore.getPendingTasks(String(props.customVariable))
-//   completedTasks.value = await projectStore.getCompletedTasks(String(props.customVariable))
-// })
+const pendingTasks = ref([])
+const completedTasks = ref([])
+
+onMounted(async () => {
+  pendingTasks.value = await getPendingTasks()
+  completedTasks.value = await getCompletedTasks()
+})
+
+onUpdated(async () => {
+  pendingTasks.value = await getPendingTasks()
+  completedTasks.value = await getCompletedTasks()
+})
 </script>
 
 <template>

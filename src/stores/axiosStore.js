@@ -5,7 +5,7 @@ export const useAxiosStore = defineStore('axios', {
     state: () => {
         return {
             projects: [],
-            tasks: []
+            tasks: [],
         }
     },
     getters: {
@@ -29,6 +29,15 @@ export const useAxiosStore = defineStore('axios', {
         async fetchTasks() {
             try {
                 const response = await axios.get('http://127.0.0.1:8000/tasks/');
+                this.tasks = response.data;
+            } catch (error) {
+                console.log(error);
+            }
+            return this.tasks;
+        },
+        async fetchFilteredTasks(projectID, status) {
+            try {
+                const response = await axios.get(`http://127.0.0.1:8000/tasks/filter_tasks/?project_id=${projectID}&completed=${status}`);
                 this.tasks = response.data;
             } catch (error) {
                 console.log(error);

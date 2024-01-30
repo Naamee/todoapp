@@ -38,9 +38,9 @@ const completedStatus = ref(props.status)
       <p
         class="font-weight-medium"
         :class="
-          priority == 'High Priority'
+          priority == 'HIGH PRIORITY'
             ? 'text-red'
-            : priority == 'Medium Priority'
+            : priority == 'MEDIUM PRIORITY'
               ? 'text-orange'
               : 'text-green'
         "

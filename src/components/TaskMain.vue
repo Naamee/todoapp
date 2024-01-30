@@ -1,6 +1,6 @@
 <script setup>
 import TaskListItem from './TaskListItem.vue'
-import { useProjectStore } from '@/stores/projectStore'
+// import { useProjectStore } from '@/stores/projectStore'
 import { ref, watchEffect } from 'vue'
 import { useAxiosStore } from '@/stores/axiosStore';
 
@@ -11,7 +11,7 @@ const props = defineProps({
 
 const isEmpty = ref(false)
 
-const projectStore = useProjectStore()
+// const projectStore = useProjectStore()
 const axiosStore = useAxiosStore()
 
 const deleteTask = (task) => {
@@ -38,7 +38,7 @@ watchEffect(() => {
       :projectName="task.project"
       :title="task.title"
       :description="task.description"
-      :dueDate="task.dueDate"
+      :dueDate="task.due_date"
       :priority="task.priority"
       :status="task.completed"
       @delete="deleteTask"
