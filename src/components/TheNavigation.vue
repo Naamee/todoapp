@@ -10,18 +10,17 @@ const addProject = () => {
   isActive.value = !isActive.value
 }
 
-const newProject = (name) => {
+const newProject = async (name) => {
   if (name === '') {
     isActive.value = !isActive.value //close drawer
   } else {
     //add new project & close drawer
-    projectStore.addProject(name)
+    await axiosStore.postProject(name)
+    axiosStore.fetchProjects();
     isActive.value = !isActive.value
     newProjectName.value = ''
   }
 }
-
-
 
 const getProjects = computed(() => {
   return axiosStore.getProjects;

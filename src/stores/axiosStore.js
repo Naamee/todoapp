@@ -34,6 +34,15 @@ export const useAxiosStore = defineStore('axios', {
                 console.log(error);
             }
             return this.tasks;
+        },
+        async postProject(project) {
+            try {
+                await axios.post('http://127.0.0.1:8000/projects/', {
+                    name: project
+                });
+            } catch (error) {
+                console.log(error);
+            }
         }
     }
 })
