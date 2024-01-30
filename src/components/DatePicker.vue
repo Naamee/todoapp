@@ -8,7 +8,7 @@ const modelValue = defineModel()
 const isMenuOpen = ref(false)
 
 const formattedDate = computed(() => {
-  return modelValue.value ? modelValue.value.toLocaleDateString('en') : ''
+  return modelValue.value ? modelValue.value.toLocaleDateString('en-GB') : ''
 })
 
 //validation rules for datepicker

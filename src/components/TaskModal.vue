@@ -2,7 +2,7 @@
 import DatePicker from '@/components/DatePicker.vue'
 import { ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
-import { useProjectStore } from '@/stores/projectStore'
+import { useAxiosStore } from '@/stores/axiosStore'
 
 //get current route name
 const route = useRoute()
@@ -10,11 +10,22 @@ const currentRoutePath = computed(() => route.path)
 const pathSegments = computed(() => currentRoutePath.value.split('/'))
 const currentRouteName = computed(() => pathSegments.value[pathSegments.value.length - 1])
 
+// async function getProjectID() {
+//   const projects = await axiosStore.fetchProjects()
+//   const project = await projects.find((project) => project.name === currentRouteName.value)
+
+//   if (project) {
+//     return project.id
+//   } else {
+//     console.error(`Project with name ${props.customVariable} not found.`)
+//   }
+// }
+
 const title = ref('')
 const description = ref('')
 const dueDate = ref(null)
 const priority = ref('')
-const projectStore = useProjectStore()
+const axiosStore = useAxiosStore()
 const openDialog = ref(false)
 
 const titleRules = [
@@ -45,11 +56,10 @@ const submit = async () => {
     return
   }
 
-  const formattedDate = dueDate.value.toLocaleDateString('en-US') //format: mm/dd/yyyy
+  const formattedDate = dueDate.value.toLocaleDateString('en-GB') //format: dd/mm/yyyy
 
   let newTask = {
-    id: Math.floor(Math.random() * 100000), //generate random ID
-    projectName: currentRouteName.value,
+    project: currentRouteName.value,
     title: title.value,
     description: description.value || 'No description provided.',
     dueDate: formattedDate,
@@ -58,7 +68,7 @@ const submit = async () => {
   }
 
   //add new task to store
-  await projectStore.addTask(newTask)
+  await axiosStore.postTask(newTask)
 
   //reset form fields
   title.value = ''
