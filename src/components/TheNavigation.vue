@@ -7,7 +7,7 @@ const isActive = ref(false)
 const newProjectName = ref('')
 
 const addProject = () => {
-  isActive.value = !isActive.value
+  isActive.value = !isActive.value //toggle drawer
 }
 
 const newProject = async (name) => {

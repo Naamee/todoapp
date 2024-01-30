@@ -2,11 +2,11 @@
 import DeleteBtn from './DeleteBtn.vue'
 import { ref, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { useProjectStore } from '@/stores/projectStore'
+import { useAxiosStore } from '@/stores/axiosStore'
 
 const dialog = ref(false)
 const project = ref('')
-const projectStore = useProjectStore()
+const axiosStore = useAxiosStore()
 const router = useRouter()
 
 //get current route name
@@ -15,6 +15,12 @@ const currentRoutePath = computed(() => route.path)
 const pathSegments = computed(() => currentRoutePath.value.split('/'))
 const currentRouteName = computed(() => pathSegments.value[pathSegments.value.length - 1])
 
+const formatRouteName = (name) => {
+  const inputString = name
+  const formattedString = inputString.replace(/%20/g, ' ')
+  return formattedString
+}
+
 const projectRules = [
   (value) => {
     if (value !== currentRouteName.value) return 'Project name does not match.'
@@ -22,17 +28,28 @@ const projectRules = [
   }
 ]
 
-const deleteProject = () => {
-  // Validate project field
+const validateProjectName = () => {
   const isProjectNameValid = projectRules.every((rule) => rule(project.value) === true)
+  return isProjectNameValid
+}
 
-  // If validation rule fails, prevent submission
-  if (!isProjectNameValid) {
-    return
+async function deleteProject() {
+  if (validateProjectName()) {
+    try {
+      const projects = await axiosStore.fetchProjects()
+
+      projects.forEach( async (project) => {
+        const formattedString = formatRouteName(currentRouteName.value)
+        if (project.name === formattedString) {
+          await axiosStore.deleteProject(project.id)
+          dialog.value = false
+          router.push('/test%20project')
+        }
+      })
+    } catch (error) {
+      console.error(error.message)
+    }
   }
-
-  projectStore.deleteProject(currentRouteName.value)
-  router.push('/Default Project')
 }
 
 const cancel = () => {
