@@ -10,12 +10,19 @@ const addProject = () => {
   isActive.value = !isActive.value //toggle drawer
 }
 
+const formatProjectName = (name) => {
+  const inputString = name
+  const formattedString = inputString.replace(/[^\w\s]/g, '')
+  return formattedString
+}
+
 const newProject = async (name) => {
   if (name === '') {
     isActive.value = !isActive.value //close drawer
   } else {
     //add new project & close drawer
-    await axiosStore.postProject(name)
+    const projectName = formatProjectName(name)
+    await axiosStore.postProject(projectName)
     axiosStore.fetchProjects();
     isActive.value = !isActive.value
     newProjectName.value = ''
