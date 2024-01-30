@@ -26,7 +26,7 @@ export const useAxiosStore = defineStore('axios', {
             }
             return this.projects;
         },
-        async fetchTasks() {
+        async fetchAllTasks() {
             try {
                 const response = await axios.get('http://127.0.0.1:8000/tasks/');
                 this.tasks = response.data;
@@ -60,12 +60,12 @@ export const useAxiosStore = defineStore('axios', {
                 console.log(error);
             }
         },
-        // async deleteTask(taskID) {
-        //     try {
-        //         await axios.delete(`http://127.0.0.1:8000/tasks/${taskID}/`);
-        //     } catch (error) {
-        //         console.log(error);
-        //     }
-        // }
+        async deleteTask(taskID) {
+            try {
+                await axios.delete(`http://127.0.0.1:8000/tasks/${taskID}/`);
+            } catch (error) {
+                console.log(error);
+            }
+        }
     }
 })

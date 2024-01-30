@@ -63,7 +63,7 @@ const cancel = () => {
     <template v-slot:activator="{ props }">
       <DeleteBtn size="x-small" v-bind="props" />
     </template>
-    <v-form ref="form" @submit="deleteProject">
+    <v-form ref="form" @submit="deleteProject" @keydown.enter.prevent @keydown.enter="deleteProject">
       <v-card>
         <v-card-title class="ml-2 text-grey-darken-1">
           <span class="text-h5">Delete Project: {{ currentRouteName }}</span>

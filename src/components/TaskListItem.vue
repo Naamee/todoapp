@@ -4,7 +4,7 @@ import { ref } from 'vue'
 
 const props = defineProps({
   taskID: Number,
-  projectName: String,
+  project: Number,
   title: String,
   description: String,
   dueDate: String,
@@ -26,7 +26,7 @@ const completedStatus = ref(props.status)
         :label="title"
         v-model="completedStatus"
       ></v-radio>
-      <DeleteBtn @click="emit('delete', [projectName, taskID])" />
+      <DeleteBtn @click="emit('delete', taskID)" />
     </div>
     <p class="text-body-2 text-grey-darken-1 mb-3 pl-10 text-truncate pr-5">
       {{ description }}

@@ -9,16 +9,18 @@ const props = defineProps({
 })
 
 const tab = ref(null)
+const pendingTasks = ref([])
+const completedTasks = ref([])
 const axiosStore = useAxiosStore()
 
 async function getProjectID() {
   const projects = await axiosStore.fetchProjects()
-  const project = await projects.find((project) => project.name === props.customVariable);
+  const project = await projects.find((project) => project.name === props.customVariable)
 
   if (project) {
-    return project.id;
+    return project.id
   } else {
-    console.error(`Project with name ${props.customVariable} not found.`);
+    console.error(`Project with name ${props.customVariable} not found.`)
   }
 }
 
@@ -34,18 +36,13 @@ async function getCompletedTasks() {
   return completedTasks
 }
 
-const pendingTasks = ref([])
-const completedTasks = ref([])
-
-onMounted(async () => {
+const updateData = async () => {
   pendingTasks.value = await getPendingTasks()
   completedTasks.value = await getCompletedTasks()
-})
+}
 
-onUpdated(async () => {
-  pendingTasks.value = await getPendingTasks()
-  completedTasks.value = await getCompletedTasks()
-})
+onMounted(async () => await updateData())
+onUpdated(async () => await updateData())
 </script>
 
 <template>
@@ -59,10 +56,10 @@ onUpdated(async () => {
       <v-window v-model="tab">
         <v-window-item value="pending-tab">
           <TaskModal />
-          <TaskMain status="Pending" :task-type="pendingTasks" />
+          <TaskMain status="Pending" :task-type="pendingTasks" @update-tab="updateData" />
         </v-window-item>
         <v-window-item value="completed-tab">
-          <TaskMain status="Completed" :task-type="completedTasks" />
+          <TaskMain status="Completed" :task-type="completedTasks" @updat-tab="updateData" />
         </v-window-item>
       </v-window>
     </v-card-text>
