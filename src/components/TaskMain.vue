@@ -2,6 +2,7 @@
 import TaskListItem from './TaskListItem.vue'
 import { useProjectStore } from '@/stores/projectStore'
 import { ref, watchEffect } from 'vue'
+import { useAxiosStore } from '@/stores/axiosStore';
 
 const props = defineProps({
   taskType: Array,
@@ -11,6 +12,7 @@ const props = defineProps({
 const isEmpty = ref(false)
 
 const projectStore = useProjectStore()
+const axiosStore = useAxiosStore()
 
 const deleteTask = (task) => {
   projectStore.deleteTask(task)
@@ -33,12 +35,12 @@ watchEffect(() => {
       v-for="task in taskType"
       :key="task.id"
       :taskID="task.id"
-      :projectName="task.projectName"
+      :projectName="task.project"
       :title="task.title"
       :description="task.description"
       :dueDate="task.dueDate"
       :priority="task.priority"
-      :status="task.status"
+      :status="task.completed"
       @delete="deleteTask"
     />
   </v-sheet>

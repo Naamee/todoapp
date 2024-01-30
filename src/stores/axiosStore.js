@@ -50,6 +50,13 @@ export const useAxiosStore = defineStore('axios', {
             } catch (error) {
                 console.log(error);
             }
-        }
+        },
+        // async deleteTask(taskID) {
+        //     try {
+        //         await axios.delete(`http://127.0.0.1:8000/tasks/${taskID}/`);
+        //     } catch (error) {
+        //         console.log(error);
+        //     }
+        // }
     }
 })
