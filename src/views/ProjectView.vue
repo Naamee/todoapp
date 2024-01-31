@@ -23,7 +23,7 @@ const isDefault = computed(() => route.path === '/Default Project')
         <h1 class="text-grey-darken-1 mb-4">{{ currentRoute }}</h1>
         <ProjectDeleteModal v-if="!isDefault"/>
       </div>
-      <TaskTabs :currentRoute="currentRoute"/>
+      <TaskTabs :current-route="currentRoute"/>
     </v-main>
   </v-app>
 </template>

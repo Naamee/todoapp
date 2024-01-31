@@ -55,7 +55,7 @@ onUpdated(async () => await updateData())
     <v-card-text>
       <v-window v-model="tab">
         <v-window-item value="pending-tab">
-          <TaskModal />
+          <TaskModal :currentRoute="props.currentRoute"/>
           <TaskMain status="Pending" :task-type="pendingTasks" @update-tab="updateData" />
         </v-window-item>
         <v-window-item value="completed-tab">

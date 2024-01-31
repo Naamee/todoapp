@@ -1,25 +1,22 @@
 <script setup>
 import DatePicker from '@/components/DatePicker.vue'
-import { ref, computed } from 'vue'
-import { useRoute } from 'vue-router'
+import { ref } from 'vue'
 import { useAxiosStore } from '@/stores/axiosStore'
 
-//get current route name
-const route = useRoute()
-const currentRoutePath = computed(() => route.path)
-const pathSegments = computed(() => currentRoutePath.value.split('/'))
-const currentRouteName = computed(() => pathSegments.value[pathSegments.value.length - 1])
+const props = defineProps({
+  currentRoute: String
+})
 
-// async function getProjectID() {
-//   const projects = await axiosStore.fetchProjects()
-//   const project = await projects.find((project) => project.name === currentRouteName.value)
+async function getProjectID() {
+  const projects = await axiosStore.fetchProjects()
+  const project = await projects.find((project) => project.name === props.currentRoute)
 
-//   if (project) {
-//     return project.id
-//   } else {
-//     console.error(`Project with name ${props.customVariable} not found.`)
-//   }
-// }
+  if (project) {
+    return project.id
+  } else {
+    console.error(`Project with name ${props.currentRoute} not found.`)
+  }
+}
 
 const title = ref('')
 const description = ref('')
@@ -56,15 +53,15 @@ const submit = async () => {
     return
   }
 
-  const formattedDate = dueDate.value.toLocaleDateString('en-GB') //format: dd/mm/yyyy
+  const formattedDate = dueDate.value.toLocaleDateString('fr-CA') //format: YYYY-MM-DD
 
   let newTask = {
-    project: currentRouteName.value,
+    project: await getProjectID(),
     title: title.value,
     description: description.value || 'No description provided.',
     dueDate: formattedDate,
     priority: priority.value,
-    status: false
+    completed: false
   }
 
   //add new task to store
