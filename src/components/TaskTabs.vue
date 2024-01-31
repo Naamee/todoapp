@@ -5,7 +5,7 @@ import TaskModal from '@/components/TaskModal.vue'
 import { useAxiosStore } from '@/stores/axiosStore'
 
 const props = defineProps({
-  customVariable: String
+  currentRoute: String
 })
 
 const tab = ref(null)
@@ -13,19 +13,19 @@ const pendingTasks = ref([])
 const completedTasks = ref([])
 const axiosStore = useAxiosStore()
 
-async function getProjectID() {
+const getProjectID = async () => {
   const projects = await axiosStore.fetchProjects()
-  const project = await projects.find((project) => project.name === props.customVariable)
+  const project = await projects.find((project) => project.name === props.currentRoute)
 
   if (project) {
     return project.id
   } else {
-    console.error(`Project with name ${props.customVariable} not found.`)
+    console.error(`Project with name ${props.currentRoute} not found.`)
   }
 }
 
 async function getPendingTasks() {
-  const projectID = await getProjectID()
+  const projectID = await getProjectID()  
   const pendingTasks = await axiosStore.fetchFilteredTasks(projectID, 'false')
   return pendingTasks
 }

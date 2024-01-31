@@ -4,6 +4,7 @@ import axios from 'axios';
 export const useAxiosStore = defineStore('axios', {
     state: () => {
         return {
+            project_id: [],
             projects: [],
             tasks: [],
         }
