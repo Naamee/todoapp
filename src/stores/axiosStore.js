@@ -6,7 +6,8 @@ export const useAxiosStore = defineStore('axios', {
         return {
             project_id: [],
             projects: [],
-            tasks: [],
+            pendingTasks: [],
+            completedTasks: [],
         }
     },
     getters: {
@@ -27,23 +28,23 @@ export const useAxiosStore = defineStore('axios', {
             }
             return this.projects;
         },
-        async fetchAllTasks() {
+        async fetchPendingTasks(projectID) {
             try {
-                const response = await axios.get('http://127.0.0.1:8000/tasks/');
-                this.tasks = response.data;
+                const response = await axios.get(`http://127.0.0.1:8000/tasks/filter_tasks/?project_id=${projectID}&completed=false`);
+                this.pendingTasks = response.data;
             } catch (error) {
                 console.log(error);
             }
-            return this.tasks;
+            return this.pendingTasks;
         },
-        async fetchFilteredTasks(projectID, status) {
+        async fetchCompletedTasks(projectID) {
             try {
-                const response = await axios.get(`http://127.0.0.1:8000/tasks/filter_tasks/?project_id=${projectID}&completed=${status}`);
-                this.tasks = response.data;
+                const response = await axios.get(`http://127.0.0.1:8000/tasks/filter_tasks/?project_id=${projectID}&completed=true`);
+                this.completedTasks = response.data;
             } catch (error) {
                 console.log(error);
             }
-            return this.tasks;
+            return this.completedTasks;
         },
         async postProject(project) {
             try {
@@ -63,14 +64,15 @@ export const useAxiosStore = defineStore('axios', {
         },
         async postTask(task) {
             try {
-                console.log(task);
                 await axios.post('http://127.0.0.1:8000/tasks/',{
                     project: task.project,
                     title: task.title,
                     description: task.description,
-                    due_date: task.dueDate,
+                    due_date: task.due_date,
                     priority: task.priority,
                 });
+                // Add the new task to pending tasks
+                this.pendingTasks.push(task);
             } catch (error) {
                 console.log(error, task);
             }
@@ -78,6 +80,9 @@ export const useAxiosStore = defineStore('axios', {
         async deleteTask(taskID) {
             try {
                 await axios.delete(`http://127.0.0.1:8000/tasks/${taskID}/`);
+                // Remove the deleted task from the corresponding array
+                this.pendingTasks = this.pendingTasks.filter(task => task.id !== taskID);
+                this.completedTasks = this.completedTasks.filter(task => task.id !== taskID);
             } catch (error) {
                 console.log(error);
             }

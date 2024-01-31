@@ -7,6 +7,8 @@ const props = defineProps({
   currentRoute: String
 })
 
+const emit =  defineEmits(['updateTab'])
+
 async function getProjectID() {
   const projects = await axiosStore.fetchProjects()
   const project = await projects.find((project) => project.name === props.currentRoute)
@@ -53,19 +55,20 @@ const submit = async () => {
     return
   }
 
-  const formattedDate = dueDate.value.toLocaleDateString('fr-CA') //format: YYYY-MM-DD
+  const formattedDate = dueDate.value.toLocaleDateString('en-GB') //format: YYYY-MM-DD
 
   let newTask = {
     project: await getProjectID(),
     title: title.value,
     description: description.value || 'No description provided.',
-    dueDate: formattedDate,
+    due_date: formattedDate,
     priority: priority.value,
     completed: false
   }
-
+  
   //add new task to store
   await axiosStore.postTask(newTask)
+  emit('updateTab')
 
   //reset form fields
   title.value = ''
@@ -73,6 +76,7 @@ const submit = async () => {
   dueDate.value = null
   priority.value = ''
   openDialog.value = false
+  
 }
 </script>
 
@@ -140,7 +144,6 @@ const submit = async () => {
               text="Save"
               color="teal"
               variant="elevated"
-              type="submit"
               @click="submit"
             ></v-btn>
           </v-card-actions>

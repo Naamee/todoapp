@@ -12,8 +12,8 @@ const emit = defineEmits(['updateTab'])
 const isEmpty = ref(false)
 const axiosStore = useAxiosStore()
 
-const deleteTask = (taskID) => {
-  axiosStore.deleteTask(taskID)
+const deleteTask = async (taskID) => {
+  await axiosStore.deleteTask(taskID)
   emit('updateTab')
 }
 
