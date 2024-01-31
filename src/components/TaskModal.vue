@@ -3,11 +3,17 @@ import DatePicker from '@/components/DatePicker.vue'
 import { ref } from 'vue'
 import { useAxiosStore } from '@/stores/axiosStore'
 
-const props = defineProps({
-  currentRoute: String
-})
+const props = defineProps({currentRoute: String})
 
-const emit =  defineEmits(['updateTab'])
+const emit =  defineEmits(['addedTask'])
+
+//form fields
+const title = ref('')
+const description = ref('')
+const dueDate = ref(null)
+const priority = ref('')
+const axiosStore = useAxiosStore()
+const openDialog = ref(false)
 
 async function getProjectID() {
   const projects = await axiosStore.fetchProjects()
@@ -20,13 +26,7 @@ async function getProjectID() {
   }
 }
 
-const title = ref('')
-const description = ref('')
-const dueDate = ref(null)
-const priority = ref('')
-const axiosStore = useAxiosStore()
-const openDialog = ref(false)
-
+//validation rules
 const titleRules = [
   (value) => {
     if (!value) return 'You must enter a title.'
@@ -37,7 +37,6 @@ const titleRules = [
     return true
   }
 ]
-
 const priorityRules = [
   (value) => {
     if (value) return true
@@ -68,7 +67,7 @@ const submit = async () => {
   
   //add new task to store
   await axiosStore.postTask(newTask)
-  emit('updateTab')
+  emit('addedTask')
 
   //reset form fields
   title.value = ''

@@ -61,10 +61,10 @@ onUpdated(() => getInitialData())
       <v-window v-model="tab">
         <v-window-item value="pending-tab">
           <TaskModal :currentRoute="props.currentRoute"/>
-          <TaskMain status="Pending" :task-type="pendingTasks" @update-tab="updateData"/>
+          <TaskMain status="Pending" :task-type="pendingTasks" @update-tab="updateData" @added-task="getInitialData"/>
         </v-window-item>
         <v-window-item value="completed-tab">
-          <TaskMain status="Completed" :task-type="completedTasks" @update-tab="updateData"/>
+          <TaskMain status="Completed" :task-type="completedTasks" @update-tab="updateData" @added-task="getInitialData"/>
         </v-window-item>
       </v-window>
     </v-card-text>
