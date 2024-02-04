@@ -19,7 +19,7 @@ const completedStatus = ref(props.status)
 
 async function updateTaskStatus() {
   await axiosStore.updateTaskStatus(props.taskID, props.status)
-} 
+}
 </script>
 
 <template>
