@@ -32,7 +32,7 @@ async function updateTaskStatus() {
         v-model="completedStatus"
         @change="updateTaskStatus"
       ></v-checkbox-btn>
-      <DeleteBtn @click="emit('delete', taskID)" />
+      <DeleteBtn variant="plain" @click="emit('delete', taskID)" />
     </div>
     <p class="text-body-2 text-grey-darken-1 mb-3 pl-10 text-truncate pr-5">
       {{ description }}
@@ -44,9 +44,9 @@ async function updateTaskStatus() {
       <p
         class="font-weight-medium"
         :class="
-          priority == 'HIGH PRIORITY'
+          priority == 'High Priority'
             ? 'text-red'
-            : priority == 'MEDIUM PRIORITY'
+            : priority == 'Medium Priority'
               ? 'text-orange'
               : 'text-green'
         "

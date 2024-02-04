@@ -1,15 +1,16 @@
 <script setup>
 defineProps({
-  size: String
+  size: String,
+  variant: String
 })
 </script>
 
 <template>
   <v-btn
-    class="delete-btn ml-n3"
+    class="delete-btn"
     aria-label="delete"
     color="grey"
-    variant="plain"
+    :variant="variant"
     :ripple="false"
     icon="mdi-delete"
     :size="size"

@@ -1,6 +1,7 @@
 <script setup>
 defineProps({
-  size: String
+  size: String,
+  variant: String
 })
 </script>
 
@@ -9,7 +10,7 @@ defineProps({
     class="edit-btn"
     aria-label="delete"
     color="grey"
-    variant="plain"
+    :variant="variant"
     :ripple="false"
     icon="mdi-pencil"
     :size="size"
