@@ -3,9 +3,9 @@ import DatePicker from '@/components/DatePicker.vue'
 import { ref } from 'vue'
 import { useAxiosStore } from '@/stores/axiosStore'
 
-const props = defineProps({currentRoute: String})
+const props = defineProps({ currentRoute: String })
 
-const emit =  defineEmits(['addedTask'])
+const emit = defineEmits(['addedTask'])
 
 //form fields
 const title = ref('')
@@ -64,7 +64,7 @@ const submit = async () => {
     priority: priority.value,
     completed: false
   }
-  
+
   //add new task to store
   await axiosStore.postTask(newTask)
   emit('addedTask')
@@ -75,7 +75,6 @@ const submit = async () => {
   dueDate.value = null
   priority.value = ''
   openDialog.value = false
-  
 }
 </script>
 
@@ -139,12 +138,7 @@ const submit = async () => {
               variant="elevated"
               @click="isActive.value = false"
             ></v-btn>
-            <v-btn
-              text="Save"
-              color="teal"
-              variant="elevated"
-              @click="submit"
-            ></v-btn>
+            <v-btn text="Save" color="teal" variant="elevated" @click="submit"></v-btn>
           </v-card-actions>
         </v-card>
       </v-form>

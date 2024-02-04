@@ -17,7 +17,7 @@ export const useAxiosStore = defineStore('axios', {
         getTasks(state) {
             return state.tasks;
         }
-    }, 
+    },
     actions: {
         async fetchProjects() {
             try {
@@ -64,13 +64,15 @@ export const useAxiosStore = defineStore('axios', {
         },
         async postTask(task) {
             try {
-                await axios.post('http://127.0.0.1:8000/tasks/',{
+                const response = await axios.post('http://127.0.0.1:8000/tasks/', {
                     project: task.project,
                     title: task.title,
                     description: task.description,
                     due_date: task.due_date,
                     priority: task.priority,
                 });
+                // get new task id from response
+                task.id = response.data.id;
                 // Add the new task to pending tasks
                 this.pendingTasks.push(task);
             } catch (error) {

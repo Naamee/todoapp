@@ -23,19 +23,19 @@ const newProject = async (name) => {
     //add new project & close drawer
     const projectName = formatProjectName(name)
     await axiosStore.postProject(projectName)
-    axiosStore.fetchProjects();
+    axiosStore.fetchProjects()
     isActive.value = !isActive.value
     newProjectName.value = ''
   }
 }
 
 const getProjects = computed(() => {
-  return axiosStore.getProjects;
-});
+  return axiosStore.getProjects
+})
 
 onMounted(() => {
-  axiosStore.fetchProjects();
-});
+  axiosStore.fetchProjects()
+})
 </script>
 
 <template>
@@ -53,9 +53,7 @@ onMounted(() => {
       :to="`/${project.name}`"
       base-color="teal"
     >
-      <v-list-item-title class="text-body-2">{{
-        project.name
-      }}</v-list-item-title></v-list-item
+      <v-list-item-title class="text-body-2">{{ project.name }}</v-list-item-title></v-list-item
     >
     <v-text-field
       v-if="isActive"

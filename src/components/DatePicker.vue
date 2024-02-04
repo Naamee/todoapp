@@ -18,8 +18,8 @@ const dueDateRules = [
     const today = new Date().setHours(0, 0, 0, 0)
 
     //convert to YYYY-MM-DD format
-    let parts = value.split('/');
-    let formattedValue = new Date(parts[2], parts[1] - 1, parts[0]).setHours(0, 0, 0, 0);
+    let parts = value.split('/')
+    let formattedValue = new Date(parts[2], parts[1] - 1, parts[0]).setHours(0, 0, 0, 0)
     const dueDate = new Date(formattedValue).setHours(0, 0, 0, 0)
     if (today > dueDate) return 'Due date cannot be a past date.'
     return true

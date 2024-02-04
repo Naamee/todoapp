@@ -25,7 +25,7 @@ const getProjectID = async () => {
 }
 
 async function getPendingTasks() {
-  const projectID = await getProjectID()  
+  const projectID = await getProjectID()
   const pendingTasks = await axiosStore.fetchPendingTasks(projectID)
   return pendingTasks
 }
@@ -60,11 +60,21 @@ onUpdated(() => getInitialData())
     <v-card-text>
       <v-window v-model="tab">
         <v-window-item value="pending-tab">
-          <TaskModal :currentRoute="props.currentRoute"/>
-          <TaskMain status="Pending" :task-type="pendingTasks" @update-tab="updateData" @added-task="getInitialData"/>
+          <TaskModal :currentRoute="props.currentRoute" />
+          <TaskMain
+            status="Pending"
+            :task-type="pendingTasks"
+            @update-tab="updateData"
+            @added-task="getInitialData"
+          />
         </v-window-item>
         <v-window-item value="completed-tab">
-          <TaskMain status="Completed" :task-type="completedTasks" @update-tab="updateData" @added-task="getInitialData"/>
+          <TaskMain
+            status="Completed"
+            :task-type="completedTasks"
+            @update-tab="updateData"
+            @added-task="getInitialData"
+          />
         </v-window-item>
       </v-window>
     </v-card-text>
