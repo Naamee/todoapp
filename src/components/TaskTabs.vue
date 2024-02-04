@@ -64,8 +64,10 @@ onUpdated(() => getInitialData())
           <TaskMain
             status="Pending"
             :task-type="pendingTasks"
+            :currentRoute="props.currentRoute"
             @update-tab="updateData"
             @added-task="getInitialData"
+            @updated-task="getInitialData"
             @changed-status="getInitialData"
           />
         </v-window-item>
@@ -75,6 +77,7 @@ onUpdated(() => getInitialData())
             :task-type="completedTasks"
             @update-tab="updateData"
             @added-task="getInitialData"
+            @updated-task="getInitialData"
             @changed-status="getInitialData"
           />
         </v-window-item>

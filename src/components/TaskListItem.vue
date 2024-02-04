@@ -1,5 +1,6 @@
 <script setup>
 import DeleteBtn from './DeleteBtn.vue'
+import TaskEditModal from './TaskEditModal.vue';
 import { ref } from 'vue'
 import { useProjectStore } from '@/stores/projectStore'
 
@@ -10,7 +11,8 @@ const props = defineProps({
   description: String,
   dueDate: String,
   priority: String,
-  status: Boolean
+  status: Boolean,
+  currentRoute: String
 })
 
 const projectStore = useProjectStore()
@@ -32,7 +34,8 @@ async function updateTaskStatus() {
         v-model="completedStatus"
         @change="updateTaskStatus"
       ></v-checkbox-btn>
-      <DeleteBtn variant="plain" @click="emit('delete', taskID)" />
+      <TaskEditModal :task-ID="props.taskID" :currentRoute="props.currentRoute"/>
+      <DeleteBtn class="ml-n4" variant="plain" @click="emit('delete', taskID)" />
     </div>
     <p class="text-body-2 text-grey-darken-1 mb-3 pl-10 text-truncate pr-5">
       {{ description }}

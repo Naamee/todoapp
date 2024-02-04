@@ -5,7 +5,8 @@ import { useProjectStore } from '@/stores/projectStore'
 
 const props = defineProps({
   taskType: Array,
-  status: String
+  status: String,
+  currentRoute: String
 })
 
 const emit = defineEmits(['updateTab'])
@@ -41,6 +42,7 @@ watchEffect(() => {
       :priority="task.priority"
       :status="task.completed"
       @delete="deleteTask"
+      :currentRoute="props.currentRoute"
     />
   </v-sheet>
 </template>

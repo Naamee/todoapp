@@ -73,6 +73,14 @@ export const useProjectStore = defineStore('project', {
                 console.log(error);
             }
         },
+        async getTask(taskID) {
+            try {
+                const response = await axios.get(`http://127.0.0.1:8000/tasks/${taskID}/`);
+                return response.data; 
+            } catch (error) {
+                console.log(error);
+            }
+        },  
         async postTask(task) {
             try {
                 const response = await axios.post('http://127.0.0.1:8000/tasks/', {
@@ -96,6 +104,23 @@ export const useProjectStore = defineStore('project', {
                 // Remove the deleted task from the corresponding array
                 this.pendingTasks = this.pendingTasks.filter(task => task.id !== taskID);
                 this.completedTasks = this.completedTasks.filter(task => task.id !== taskID);
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        async editTask(taskID, task) {
+            try {
+                await axios({
+                    method: 'patch',
+                    url: `http://127.0.0.1:8000/tasks/${taskID}/`,
+                    data: {
+                        title: task.title,
+                        description: task.description,
+                        due_date: task.due_date,
+                        priority: task.priority
+                    }
+                });
+                return await this.getTask(taskID);
             } catch (error) {
                 console.log(error);
             }

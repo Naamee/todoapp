@@ -12,7 +12,9 @@ const route = useRoute()
 const currentRoute = computed(() => route.path.substring(1).replace(/%20/g, ' '))
 
 //hide delete button if default project
-const isDefault = computed(() => route.path === '/Default Project') 
+const isDefault = computed(
+  () => route.path === '/Default%20Project' || route.path === '/Default Project'
+)
 </script>
 
 <template>
@@ -22,10 +24,10 @@ const isDefault = computed(() => route.path === '/Default Project')
     <v-main class="ml-10 mt-5">
       <div class="d-flex">
         <h1 class="text-grey-darken-1 mb-4">{{ currentRoute }}</h1>
-        <ProjectEditModal v-if="!isDefault"/>
-        <ProjectDeleteModal v-if="!isDefault"/>
+        <ProjectEditModal v-if="!isDefault" />
+        <ProjectDeleteModal v-if="!isDefault" />
       </div>
-      <TaskTabs :current-route="currentRoute"/>
+      <TaskTabs :current-route="currentRoute" />
     </v-main>
   </v-app>
 </template>
