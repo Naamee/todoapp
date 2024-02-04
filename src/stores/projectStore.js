@@ -120,7 +120,23 @@ export const useProjectStore = defineStore('project', {
                         priority: task.priority
                     }
                 });
-                return await this.getTask(taskID);
+                let taskIndex = this.pendingTasks.findIndex(task => task.id === taskID);
+                // If task is found in pending tasks
+                if (taskIndex !== -1) {
+                    this.pendingTasks[taskIndex].title = task.title;
+                    this.pendingTasks[taskIndex].description = task.description;
+                    this.pendingTasks[taskIndex].due_date = task.due_date;
+                    this.pendingTasks[taskIndex].priority = task.priority;
+                } else {
+                    taskIndex = this.completedTasks.findIndex(task => task.id === taskID);
+                    //if task is found in completed tasks
+                    if (taskIndex !== -1) {
+                        this.completedTasks[taskIndex].title = task.title;
+                        this.completedTasks[taskIndex].description = task.description;
+                        this.completedTasks[taskIndex].due_date = task.due_date;
+                        this.completedTasks[taskIndex].priority = task.priority;
+                    }
+                }
             } catch (error) {
                 console.log(error);
             }
