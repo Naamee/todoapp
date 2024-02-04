@@ -1,6 +1,7 @@
 <script setup>
 import DeleteBtn from './DeleteBtn.vue'
 import { ref } from 'vue'
+import { useAxiosStore } from '@/stores/axiosStore'
 
 const props = defineProps({
   taskID: Number,
@@ -12,20 +13,24 @@ const props = defineProps({
   status: Boolean
 })
 
+const axiosStore = useAxiosStore()
 const emit = defineEmits(['delete'])
 const completedStatus = ref(props.status)
+
+async function updateTaskStatus() {
+  await axiosStore.updateTaskStatus(props.taskID, props.status)
+} 
 </script>
 
 <template>
   <v-sheet elevation="2" class="pb-5" style="word-break: break-word">
     <div class="d-flex flex-space-between">
-      <v-radio
-        true-icon="$success"
-        color="success"
-        class="status-radio text-teal-darken-3 font-weight-bold"
+      <v-checkbox-btn
         :label="title"
+        class="teal text-teal-darken-3 font-weight-bold"
         v-model="completedStatus"
-      ></v-radio>
+        @change="updateTaskStatus"
+      ></v-checkbox-btn>
       <DeleteBtn @click="emit('delete', taskID)" />
     </div>
     <p class="text-body-2 text-grey-darken-1 mb-3 pl-10 text-truncate pr-5">

@@ -88,6 +88,17 @@ export const useAxiosStore = defineStore('axios', {
             } catch (error) {
                 console.log(error);
             }
+        },
+        async updateTaskStatus(taskID, status) {
+            try {
+                await axios({
+                    method: 'patch',
+                    url: `http://127.0.0.1:8000/tasks/${taskID}/`,
+                    data: { completed: !status}
+                })
+            } catch (error) {
+                console.log(error);
+            }
         }
     }
 })
