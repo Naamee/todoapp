@@ -13,9 +13,6 @@ const isEmpty = ref(false)
 const axiosStore = useAxiosStore()
 
 const deleteTask = async (taskID) => {
-  console.log(props.taskType)
-  console.log(axiosStore.pendingTasks)
-  console.log(taskID)
   await axiosStore.deleteTask(taskID)
   emit('updateTab')
 }
