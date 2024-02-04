@@ -66,6 +66,7 @@ onUpdated(() => getInitialData())
             :task-type="pendingTasks"
             @update-tab="updateData"
             @added-task="getInitialData"
+            @changed-status="getInitialData"
           />
         </v-window-item>
         <v-window-item value="completed-tab">
@@ -74,6 +75,7 @@ onUpdated(() => getInitialData())
             :task-type="completedTasks"
             @update-tab="updateData"
             @added-task="getInitialData"
+            @changed-status="getInitialData"
           />
         </v-window-item>
       </v-window>

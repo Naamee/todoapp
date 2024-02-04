@@ -95,7 +95,24 @@ export const useProjectStore = defineStore('project', {
                     method: 'patch',
                     url: `http://127.0.0.1:8000/tasks/${taskID}/`,
                     data: { completed: !status}
-                })
+                });
+                let taskIndex = this.pendingTasks.findIndex(task => task.id === taskID);
+                // If task is found in pending tasks
+                if (taskIndex !== -1) {
+                    this.pendingTasks[taskIndex].completed = !status;
+                    if (!status) {
+                        this.completedTasks.push(this.pendingTasks.splice(taskIndex, 1)[0]);
+                    }
+                } else {
+                    taskIndex = this.completedTasks.findIndex(task => task.id === taskID);
+                    //if task is found in completed tasks
+                    if (taskIndex !== -1) {
+                        this.completedTasks[taskIndex].completed = !status;
+                        if (status) {
+                            this.pendingTasks.push(this.completedTasks.splice(taskIndex, 1)[0]);
+                        }
+                    }
+                }
             } catch (error) {
                 console.log(error);
             }

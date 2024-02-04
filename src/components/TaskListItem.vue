@@ -14,11 +14,12 @@ const props = defineProps({
 })
 
 const projectStore = useProjectStore()
-const emit = defineEmits(['delete'])
+const emit = defineEmits(['delete', 'changedStatus'])
 const completedStatus = ref(props.status)
 
 async function updateTaskStatus() {
   await projectStore.updateTaskStatus(props.taskID, props.status)
+  emit('changedStatus')
 }
 </script>
 
