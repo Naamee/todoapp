@@ -16,6 +16,15 @@ const formatProjectName = (name) => {
   return formattedString
 }
 
+const projectNameRules = [
+  async (value) => {
+    console.log(value)
+    if (await nameExists(value)) return 'Project name already exists.'
+    return true
+  }
+]
+
+
 async function nameExists(name) {
   const projects = await projectStore.fetchProjects()
   return projects.some((project) => project.name === name)
@@ -65,7 +74,7 @@ onMounted(() => {
     <v-text-field
       v-if="isActive"
       v-model="newProjectName"
-      hide-details
+      :rules="projectNameRules"
       autofocus
       placeholder="Enter New Project Name"
       variant="outlined"
