@@ -1,7 +1,7 @@
 <script setup>
 import TaskListItem from './TaskListItem.vue'
 import { ref, watchEffect } from 'vue'
-import { useAxiosStore } from '@/stores/axiosStore'
+import { useProjectStore } from '@/stores/projectStore'
 
 const props = defineProps({
   taskType: Array,
@@ -10,10 +10,10 @@ const props = defineProps({
 
 const emit = defineEmits(['updateTab'])
 const isEmpty = ref(false)
-const axiosStore = useAxiosStore()
+const projectStore = useProjectStore()
 
 const deleteTask = async (taskID) => {
-  await axiosStore.deleteTask(taskID)
+  await projectStore.deleteTask(taskID)
   emit('updateTab')
 }
 

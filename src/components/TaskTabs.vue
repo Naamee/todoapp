@@ -2,19 +2,19 @@
 import TaskMain from '@/components/TaskMain.vue'
 import { ref, onMounted, onUpdated } from 'vue'
 import TaskModal from '@/components/TaskModal.vue'
-import { useAxiosStore } from '@/stores/axiosStore'
+import { useProjectStore } from '@/stores/projectStore'
 
 const props = defineProps({
   currentRoute: String
 })
 
 const tab = ref(null)
-const axiosStore = useAxiosStore()
-const pendingTasks = ref(axiosStore.pendingTasks)
-const completedTasks = ref(axiosStore.completedTasks)
+const projectStore = useProjectStore()
+const pendingTasks = ref(projectStore.pendingTasks)
+const completedTasks = ref(projectStore.completedTasks)
 
 const getProjectID = async () => {
-  const projects = await axiosStore.fetchProjects()
+  const projects = await projectStore.fetchProjects()
   const project = await projects.find((project) => project.name === props.currentRoute)
 
   if (project) {
@@ -26,13 +26,13 @@ const getProjectID = async () => {
 
 async function getPendingTasks() {
   const projectID = await getProjectID()
-  const pendingTasks = await axiosStore.fetchPendingTasks(projectID)
+  const pendingTasks = await projectStore.fetchPendingTasks(projectID)
   return pendingTasks
 }
 
 async function getCompletedTasks() {
   const projectID = await getProjectID()
-  const completedTasks = await axiosStore.fetchCompletedTasks(projectID)
+  const completedTasks = await projectStore.fetchCompletedTasks(projectID)
   return completedTasks
 }
 
@@ -42,8 +42,8 @@ const getInitialData = async () => {
 }
 
 const updateData = () => {
-  pendingTasks.value = axiosStore.pendingTasks
-  completedTasks.value = axiosStore.completedTasks
+  pendingTasks.value = projectStore.pendingTasks
+  completedTasks.value = projectStore.completedTasks
 }
 
 onMounted(() => getInitialData())

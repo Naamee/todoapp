@@ -1,8 +1,8 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
-import { useAxiosStore } from '@/stores/axiosStore'
+import { useProjectStore } from '@/stores/projectStore'
 
-const axiosStore = useAxiosStore()
+const projectStore = useProjectStore()
 const isActive = ref(false)
 const newProjectName = ref('')
 
@@ -22,19 +22,19 @@ const newProject = async (name) => {
   } else {
     //add new project & close drawer
     const projectName = formatProjectName(name)
-    await axiosStore.postProject(projectName)
-    axiosStore.fetchProjects()
+    await projectStore.postProject(projectName)
+    projectStore.fetchProjects()
     isActive.value = !isActive.value
     newProjectName.value = ''
   }
 }
 
 const getProjects = computed(() => {
-  return axiosStore.getProjects
+  return projectStore.getProjects
 })
 
 onMounted(() => {
-  axiosStore.fetchProjects()
+  projectStore.fetchProjects()
 })
 </script>
 

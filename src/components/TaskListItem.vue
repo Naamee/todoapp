@@ -1,7 +1,7 @@
 <script setup>
 import DeleteBtn from './DeleteBtn.vue'
 import { ref } from 'vue'
-import { useAxiosStore } from '@/stores/axiosStore'
+import { useProjectStore } from '@/stores/projectStore'
 
 const props = defineProps({
   taskID: Number,
@@ -13,12 +13,12 @@ const props = defineProps({
   status: Boolean
 })
 
-const axiosStore = useAxiosStore()
+const projectStore = useProjectStore()
 const emit = defineEmits(['delete'])
 const completedStatus = ref(props.status)
 
 async function updateTaskStatus() {
-  await axiosStore.updateTaskStatus(props.taskID, props.status)
+  await projectStore.updateTaskStatus(props.taskID, props.status)
 }
 </script>
 

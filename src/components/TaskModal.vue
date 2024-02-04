@@ -1,7 +1,7 @@
 <script setup>
 import DatePicker from '@/components/DatePicker.vue'
 import { ref } from 'vue'
-import { useAxiosStore } from '@/stores/axiosStore'
+import { useProjectStore } from '@/stores/projectStore'
 
 const props = defineProps({ currentRoute: String })
 
@@ -12,11 +12,11 @@ const title = ref('')
 const description = ref('')
 const dueDate = ref(null)
 const priority = ref('')
-const axiosStore = useAxiosStore()
+const projectStore = useProjectStore()
 const openDialog = ref(false)
 
 async function getProjectID() {
-  const projects = await axiosStore.fetchProjects()
+  const projects = await projectStore.fetchProjects()
   const project = await projects.find((project) => project.name === props.currentRoute)
 
   if (project) {
@@ -66,7 +66,7 @@ const submit = async () => {
   }
 
   //add new task to store
-  await axiosStore.postTask(newTask)
+  await projectStore.postTask(newTask)
   emit('addedTask')
 
   //reset form fields

@@ -2,11 +2,11 @@
 import DeleteBtn from './DeleteBtn.vue'
 import { ref, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { useAxiosStore } from '@/stores/axiosStore'
+import { useProjectStore } from '@/stores/projectStore'
 
 const dialog = ref(false)
 const project = ref('')
-const axiosStore = useAxiosStore()
+const projectStore = useProjectStore()
 const router = useRouter()
 
 //get current route name
@@ -36,12 +36,12 @@ const validateProjectName = () => {
 async function deleteProject() {
   if (validateProjectName()) {
     try {
-      const projects = await axiosStore.fetchProjects()
+      const projects = await projectStore.fetchProjects()
 
       projects.forEach(async (project) => {
         const formattedString = formatRouteName(currentRouteName.value)
         if (project.name === formattedString) {
-          await axiosStore.deleteProject(project.id)
+          await projectStore.deleteProject(project.id)
           dialog.value = false
           router.push('/test%20project')
         }
