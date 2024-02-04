@@ -16,9 +16,16 @@ const formatProjectName = (name) => {
   return formattedString
 }
 
+async function nameExists(name) {
+  const projects = await projectStore.fetchProjects()
+  return projects.some((project) => project.name === name)
+}
+
 const newProject = async (name) => {
-  if (name === '') {
+  if (name === '' || await nameExists(name) == true) {
+    newProjectName.value = ''
     isActive.value = !isActive.value //close drawer
+    
   } else {
     //add new project & close drawer
     const projectName = formatProjectName(name)
