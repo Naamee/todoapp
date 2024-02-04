@@ -53,7 +53,7 @@ onMounted(() => {
       :to="`/${project.name}`"
       base-color="teal"
     >
-      <v-list-item-title class="text-body-2">{{ project.name }}</v-list-item-title></v-list-item
+      <v-list-item-title class="text-body-2"> {{ project.name }}</v-list-item-title></v-list-item
     >
     <v-text-field
       v-if="isActive"

@@ -62,6 +62,17 @@ export const useProjectStore = defineStore('project', {
                 console.log(error);
             }
         },
+        async editProject(project, newValue) {
+            try {
+                await axios({
+                    method: 'patch',
+                    url: `http://127.0.0.1:8000/projects/${project.id}/`,
+                    data: { name: newValue }
+                });
+            } catch (error) {
+                console.log(error);
+            }
+        },
         async postTask(task) {
             try {
                 const response = await axios.post('http://127.0.0.1:8000/tasks/', {

@@ -6,18 +6,18 @@ defineProps({
 
 <template>
   <v-btn
-    class="delete-btn ml-n3"
+    class="edit-btn"
     aria-label="delete"
     color="grey"
     variant="plain"
     :ripple="false"
-    icon="mdi-delete"
+    icon="mdi-pencil"
     :size="size"
   ></v-btn>
 </template>
 
 <style scope>
-.delete-btn:hover {
-  color: red !important;
+.edit-btn:hover {
+  color: rgb(61, 154, 220) !important;
 }
 </style>

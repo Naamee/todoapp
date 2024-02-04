@@ -1,5 +1,5 @@
 <script setup>
-import DeleteBtn from './DeleteBtn.vue'
+import EditBtn from './EditBtn.vue'
 import { ref, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useProjectStore } from '@/stores/projectStore'
@@ -9,21 +9,17 @@ const project = ref('')
 const projectStore = useProjectStore()
 const router = useRouter()
 
+
 //get current route name
 const route = useRoute()
 const currentRoutePath = computed(() => route.path)
 const pathSegments = computed(() => currentRoutePath.value.split('/'))
 const currentRouteName = computed(() => pathSegments.value[pathSegments.value.length - 1])
 
-const formatRouteName = (name) => {
-  const inputString = name
-  const formattedString = inputString.replace(/%20/g, ' ')
-  return formattedString
-}
-
 const projectRules = [
   (value) => {
-    if (value !== currentRouteName.value) return 'Project name does not match.'
+    const projects = projectStore.projects
+    if (projects.some((project) => project.name === value)) return 'Project name already exists.'
     return true
   }
 ]
@@ -33,17 +29,17 @@ const validateProjectName = () => {
   return isProjectNameValid
 }
 
-async function deleteProject() {
+async function editProject() {
   if (validateProjectName()) {
     try {
-      const projects = await projectStore.fetchProjects()
+      const projects = projectStore.projects
+      const newProjectName = project.value
 
       projects.forEach(async (project) => {
-        const formattedString = formatRouteName(currentRouteName.value)
-        if (project.name === formattedString) {
-          await projectStore.deleteProject(project.id)
+        if (project.name === currentRouteName.value) {
+          await projectStore.editProject(project, newProjectName)
           dialog.value = false
-          router.push('/Default%20Project')
+          router.push('/' + newProjectName)
         }
       })
     } catch (error) {
@@ -61,23 +57,18 @@ const cancel = () => {
 <template>
   <v-dialog v-model="dialog" width="500">
     <template v-slot:activator="{ props }">
-      <DeleteBtn size="x-small" v-bind="props" />
+      <EditBtn size="x-small" v-bind="props" />
     </template>
-    <v-form
-      ref="form"
-      @submit="deleteProject"
-      @keydown.enter.prevent
-      @keydown.enter="deleteProject"
-    >
+    <v-form ref="form" @submit="editProject" @keydown.enter.prevent @keydown.enter="editProject">
       <v-card>
         <v-card-title class="ml-2 text-grey-darken-1">
-          <span class="text-h5">Delete Project: {{ currentRouteName }}</span>
+          <span class="text-h5">Edit Project Name: {{ currentRouteName }}</span>
         </v-card-title>
         <v-card-text>
           <v-text-field
             color="teal"
             variant="outlined"
-            label="Enter Project Name"
+            label="Enter New Project Name"
             v-model="project"
             :rules="projectRules"
             required
@@ -85,8 +76,8 @@ const cancel = () => {
         </v-card-text>
         <v-card-actions class="mr-4 mt-n4">
           <v-spacer></v-spacer>
-          <v-btn text="Cancel" color="teal" variant="elevated" @click="cancel"></v-btn>
-          <v-btn text="Delete" color="error " variant="elevated" @click="deleteProject"></v-btn>
+          <v-btn text="Cancel" color="error" variant="elevated" @click="cancel"></v-btn>
+          <v-btn text="Confirm" color="teal" variant="elevated" @click="editProject"></v-btn>
         </v-card-actions>
       </v-card>
     </v-form>

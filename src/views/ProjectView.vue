@@ -3,6 +3,7 @@ import TheHeader from '@/components/TheHeader.vue'
 import TaskTabs from '@/components/TaskTabs.vue'
 import TheNavigation from '@/components/TheNavigation.vue'
 import ProjectDeleteModal from '@/components/ProjectDeleteModal.vue'
+import ProjectEditModal from '@/components/ProjectEditModal.vue'
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 
@@ -21,6 +22,7 @@ const isDefault = computed(() => route.path === '/Default Project')
     <v-main class="ml-10 mt-5">
       <div class="d-flex">
         <h1 class="text-grey-darken-1 mb-4">{{ currentRoute }}</h1>
+        <ProjectEditModal v-if="!isDefault"/>
         <ProjectDeleteModal v-if="!isDefault"/>
       </div>
       <TaskTabs :current-route="currentRoute"/>
