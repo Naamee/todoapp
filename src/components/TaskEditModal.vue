@@ -96,11 +96,12 @@ const submit = async () => {
   <v-dialog width="500" v-model="openDialog">
     <template v-slot:activator="{ props }">
       <v-btn
-        class="edit-btn text-body-2"
+        class="edit-btn"
         color="grey"
         :ripple="false"
         variant="plain"
         v-bind="props"
+        size="small"
         icon="mdi-pencil"
         @click="taskDetails"
       >

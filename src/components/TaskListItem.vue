@@ -26,8 +26,8 @@ async function updateTaskStatus() {
 </script>
 
 <template>
-  <v-sheet elevation="2" class="pb-5" style="word-break: break-word">
-    <div class="d-flex flex-space-between">
+  <v-sheet elevation="2" class="pb-5" width="300" style="word-break: break-word">
+    <div class="d-flex">
       <v-checkbox-btn
         :label="title"
         class="teal text-teal-darken-3 font-weight-bold"
@@ -35,17 +35,17 @@ async function updateTaskStatus() {
         @change="updateTaskStatus"
       ></v-checkbox-btn>
       <TaskEditModal :task-ID="props.taskID" :currentRoute="props.currentRoute"/>
-      <DeleteBtn class="ml-n4" variant="plain" @click="emit('delete', taskID)" />
+      <DeleteBtn class="ml-n4" variant="plain"  icon="mdi-delete" size="small" @click="emit('delete', taskID)" />
     </div>
-    <p class="text-body-2 text-grey-darken-1 mb-3 pl-10 text-truncate pr-5">
+    <p class="text-caption text-grey-darken-1 mb-3 pl-10 text-truncate pr-5">
       {{ description }}
     </p>
     <div class="d-flex justify-space-between pr-5">
-      <p class="pl-10 text-body-2 font-weight-medium text-grey">
+      <p class="pl-10 text-caption font-weight-medium text-grey">
         Due Date: <span class="text-teal-lighten-2">{{ dueDate }}</span>
       </p>
       <p
-        class="font-weight-medium"
+        class="font-weight-medium text-caption"
         :class="
           priority == 'High Priority'
             ? 'text-red'

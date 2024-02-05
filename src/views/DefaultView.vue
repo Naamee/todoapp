@@ -2,8 +2,7 @@
 import TheHeader from '@/components/TheHeader.vue'
 import TaskTabs from '@/components/TaskTabs.vue'
 import TheNavigation from '@/components/TheNavigation.vue'
-import ProjectDeleteModal from '@/components/ProjectDeleteModal.vue'
-import ProjectEditModal from '@/components/ProjectEditModal.vue'
+import ProjectMenu from '@/components/ProjectMenu.vue'
 import { computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 
@@ -11,7 +10,7 @@ import { useRouter, useRoute } from 'vue-router'
 const route = useRoute()
 const router = useRouter()
 router.push('/Default%20Project')
-const currentRoute = computed(() => route.path.substring(1).replace(/%20/g, ' '))
+const currentRoute = 'Default Project'
 
 //hide delete button if default project
 const isDefault = computed(
@@ -24,10 +23,9 @@ const isDefault = computed(
     <TheHeader />
     <TheNavigation />
     <v-main class="ml-10 mt-5">
-      <div class="d-flex">
-        <h1 class="text-grey-darken-1 mb-4">{{ currentRoute }}</h1>
-        <ProjectEditModal v-if="!isDefault" />
-        <ProjectDeleteModal v-if="!isDefault" />
+      <div class="d-flex mb-4">
+        <h1 class="text-grey-darken-1">{{ currentRoute }}</h1>
+        <ProjectMenu v-if="!isDefault" />
       </div>
       <TaskTabs :current-route="currentRoute" />
     </v-main>

@@ -61,7 +61,7 @@ const cancel = () => {
 <template>
   <v-dialog v-model="dialog" width="500">
     <template v-slot:activator="{ props }">
-      <DeleteBtn class="ml-1" variant="tonal" size="x-small" v-bind="props" />
+      <DeleteBtn class="ml-1" variant="plain" size="small" text="Delete Project" v-bind="props" />
     </template>
     <v-form
       ref="form"

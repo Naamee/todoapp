@@ -57,7 +57,7 @@ const cancel = () => {
 <template>
   <v-dialog v-model="dialog" width="500">
     <template v-slot:activator="{ props }">
-      <EditBtn class="ml-1" variant="tonal" size="x-small" v-bind="props" />
+      <EditBtn class="ml-1" variant="plain" size="small" text="Edit Project" v-bind="props" />
     </template>
     <v-form ref="form" @submit="editProject" @keydown.enter.prevent @keydown.enter="editProject">
       <v-card>

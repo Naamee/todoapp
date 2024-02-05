@@ -54,12 +54,12 @@ onMounted(() => {
 </script>
 
 <template>
-  <v-navigation-drawer>
-    <div class="d-flex justify-center py-2">
-      <v-avatar icon="mdi-account" color="grey"></v-avatar>
-      <v-list-item title="Naamee Akram" class="text-grey"></v-list-item>
+  <v-navigation-drawer :width="200">
+    <div class="d-flex justify-center align-center py-2">
+      <v-avatar size="small" color="grey"><span class="text-subtitle-2">NA</span></v-avatar>
+      <v-list-item class="text-grey text-body-2">Naamee Akram</v-list-item>
     </div>
-    <v-btn rounded="0" block color="teal-darken-1" class="mb-4" @click="addProject"
+    <v-btn rounded="0" block color="teal-darken-1" class="mb-4 text-body-2" @click="addProject"
       >Add New Project</v-btn
     >
     <v-list-item
@@ -81,7 +81,14 @@ onMounted(() => {
       rounded="0"
       color="teal-darken-1"
       @keyup.enter="newProject(newProjectName)"
-      class="text-h2"
+      class="text-body-2"
+      id='something'
     ></v-text-field>
   </v-navigation-drawer>
 </template>
+
+<style>
+.v-text-field input::placeholder {
+    font-size: 0.9rem;
+}
+</style>

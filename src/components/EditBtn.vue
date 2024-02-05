@@ -1,7 +1,9 @@
 <script setup>
 defineProps({
   size: String,
-  variant: String
+  variant: String,
+  text: String,
+  icon: String,
 })
 </script>
 
@@ -12,8 +14,9 @@ defineProps({
     color="grey"
     :variant="variant"
     :ripple="false"
-    icon="mdi-pencil"
+    :icon="icon"
     :size="size"
+    :text="text"
   ></v-btn>
 </template>
 
