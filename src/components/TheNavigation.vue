@@ -18,7 +18,6 @@ const formatProjectName = (name) => {
 
 const projectNameRules = [
   async (value) => {
-    console.log(value)
     if (await nameExists(value)) return 'Project name already exists.'
     return true
   }
