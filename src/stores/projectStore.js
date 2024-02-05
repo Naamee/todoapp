@@ -1,5 +1,7 @@
 import { defineStore } from 'pinia'
 import axios from 'axios';
+axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
+axios.defaults.xsrfCookieName = "csrftoken";
 
 export const useProjectStore = defineStore('project', {
     state: () => {
